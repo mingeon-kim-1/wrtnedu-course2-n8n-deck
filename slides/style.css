@@ -1,0 +1,1119 @@
+/* ====================================================================
+   Course 2 (소상공인 n8n) — Reveal.js Theme v2
+   Layout: text-left / screenshot-right grid with hard image containment
+   Palette: DESIGN.md Cursor warm light-mode
+   Slide canvas: reveal.js default 960×700 logical
+   ==================================================================== */
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  /* Surfaces */
+  --cream-bg: #f2f1ed;
+  --cream-100: #f7f7f4;
+  --cream-300: #ebeae5;
+  --cream-400: #e6e5e0;
+  --cream-500: #e1e0db;
+  --paper-white: #ffffff;
+
+  /* Text */
+  --ink: #26251e;
+  --ink-70: rgba(38, 37, 30, 0.72);
+  --ink-55: rgba(38, 37, 30, 0.55);
+  --ink-40: rgba(38, 37, 30, 0.40);
+  --ink-20: rgba(38, 37, 30, 0.20);
+  --ink-10: rgba(38, 37, 30, 0.10);
+  --ink-06: rgba(38, 37, 30, 0.06);
+
+  /* Accents */
+  --accent: #E53935;
+  --accent-orange: #f54e00;
+  --accent-warm: #cf2d56;
+  --accent-gold: #FBC02D;
+  --success: #4CAF50;
+  --success-deep: #1f8a65;
+
+  /* Semantic */
+  --callout-bg: #FFF8E1;
+  --callout-border: #FBC02D;
+  --check-bg: #D4EBD7;        /* UX-18: deepened from #E8F5E9 for distinction */
+  --check-border: #4CAF50;
+  --safety-bg: #FFFDE7;
+  --safety-border: #F9A825;
+  --fallback-bg: #FFEBEE;
+  --fallback-border: #E53935;
+  --analogy-bg: #F3E5F5;
+  --analogy-border: #8e6fb8;
+
+  /* Shadows & borders */
+  --ring-10: rgba(38, 37, 30, 0.10);
+  --ring-20: rgba(38, 37, 30, 0.20);
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.10), 0 6px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px var(--ring-10);
+  --shadow-ambient: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  /* Type stack */
+  --font-sans: "Pretendard", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont,
+               system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "jjannon", "Iowan Old Style", "Palatino Linotype", "Apple SD Gothic Neo",
+                Georgia, serif;
+  --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
+               Monaco, Consolas, "Courier New", monospace;
+
+  /* Type scale — reveal.js 1600×1000 canvas (4% margin → ~1472×920) */
+  --size-hero: 80px;
+  --size-h1: 64px;
+  --size-h2: 48px;
+  --size-h3: 34px;
+  --size-body: 30px;
+  --size-body-sm: 26px;
+  --size-caption: 22px;
+  --size-micro: 18px;
+
+  /* Spacing */
+  --sp-1: 8px;
+  --sp-2: 16px;
+  --sp-3: 24px;
+  --sp-4: 32px;
+  --sp-5: 48px;
+  --sp-6: 64px;
+}
+
+/* ---------- Reveal.js globals ---------- */
+html, body { background: var(--cream-bg); color: var(--ink); font-family: var(--font-sans); }
+
+.reveal {
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.reveal .slides { text-align: left; }
+
+/* Base: every slide flex-column with contained overflow. */
+.reveal .slides section {
+  background: var(--cream-bg);
+  color: var(--ink);
+  padding: 64px 80px 56px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+/* ---------- Headings ---------- */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3);
+  text-transform: none;
+  line-height: 1.2;
+}
+.reveal h1 { font-size: var(--size-h1); font-weight: 700; }
+.reveal h2 {
+  font-size: var(--size-h2);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.005em;
+  max-width: 100%;
+}
+.reveal h3 { font-size: var(--size-h3); font-weight: 600; }
+
+/* ---------- Body + lists ---------- */
+.reveal p, .reveal li {
+  font-size: var(--size-body);
+  line-height: 1.45;
+  color: var(--ink);
+}
+.reveal ul, .reveal ol {
+  display: block;
+  margin: 0 0 var(--sp-3);
+  padding-left: 32px;
+  max-width: 100%;
+}
+.reveal li { margin-bottom: 12px; padding-left: 6px; }
+.reveal li::marker { color: var(--accent); }
+
+.reveal strong { font-weight: 700; color: var(--ink); }
+.reveal em { font-style: normal; color: var(--accent-warm); font-weight: 600; }
+
+.reveal code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--cream-300);
+  color: var(--ink);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--ring-10);
+}
+
+/* ====================================================================
+   TUTORIAL LAYOUT — the workhorse two-column for 80% of slides
+   Any <section> that contains a <figure> switches to a CSS grid:
+   row 1 = title (full width), row 2 = text-left / image-right.
+   ==================================================================== */
+
+/* Tutorial layout: 2-column grid (v3.3 — verified working).
+   - Title (h2): absolute top-left so align-content centering doesn't move it.
+   - Text items auto-flow into col 1 rows.
+   - Figure spans col 2 across all rows.
+   - align-content: center vertically clusters the text-stack rows. */
+.reveal .slides section:has(> figure) {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  grid-auto-rows: min-content;
+  column-gap: 48px;
+  row-gap: 14px;
+  align-content: center;
+  justify-content: stretch;
+  padding: 156px 80px 56px;   /* top reserves title strip; flat L/R/B */
+}
+
+/* h2 pinned top-left (absolute, out of grid flow). */
+.reveal .slides section:has(> figure) > h2 {
+  position: absolute;
+  top: 56px;
+  left: 80px;
+  right: 320px;       /* clear slide-meta chip */
+  margin: 0;
+}
+
+/* Text column items: explicit column 1, auto-flow picks rows. */
+.reveal .slides section:has(> figure) > ul,
+.reveal .slides section:has(> figure) > ol,
+.reveal .slides section:has(> figure) > p,
+.reveal .slides section:has(> figure) > .callout,
+.reveal .slides section:has(> figure) > aside.callout,
+.reveal .slides section:has(> figure) > .analogy-box,
+.reveal .slides section:has(> figure) > .explanation,
+.reveal .slides section:has(> figure) > .url-pill,
+.reveal .slides section:has(> figure) > table {
+  grid-column: 1;
+  min-width: 0;
+}
+
+/* Figure: col 2, spans many rows so it stays full-height. */
+.reveal .slides section:has(> figure) > figure {
+  grid-column: 2;
+  grid-row: 1 / span 20;
+  align-self: center;
+  justify-self: stretch;
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* UX-3: multi-figure slides — primary fills column 2; secondary as
+   small inset at top-right of the slide (out of grid flow, absolute). */
+.reveal .slides section:has(> figure + figure) > figure:nth-of-type(1) {
+  grid-column: 2;
+  grid-row: 1 / span 20;
+  align-self: center;
+  justify-self: stretch;
+}
+.reveal .slides section:has(> figure + figure) > figure:nth-of-type(2) {
+  position: absolute;
+  top: 96px;
+  right: 40px;
+  width: 300px;
+  max-width: 300px;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  background: var(--paper-white);
+  border: 2px solid var(--ring-20);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+.reveal .slides section:has(> figure + figure) > figure:nth-of-type(2) img {
+  max-height: 180px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* UX-4: text-only layout — when the only figure is the "text_only"
+   placeholder, hide figure and span text full-width, centered. */
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) {
+  grid-template-columns: 1fr !important;   /* single column over the v3.3 2-col grid */
+  padding: 156px 120px 80px !important;
+  align-content: center;
+  justify-items: center;
+  text-align: left;
+}
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > h2 {
+  position: absolute;
+  top: 56px;
+  left: 120px;
+  right: 320px;
+  text-align: left;
+  font-size: var(--size-h1);
+  margin: 0;
+}
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > figure {
+  display: none !important;
+}
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > ul,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > ol,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > p,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > .callout,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > aside.callout,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > .analogy-box,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > .explanation {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > ul li,
+.reveal .slides section:has(> figure > img[src*="placeholder_text_only"]) > ol li {
+  font-size: var(--size-h3);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+/* ---------- Figure + hard image containment ---------- */
+.reveal figure {
+  margin: var(--sp-2) 0;
+  text-align: center;
+  max-width: 100%;
+}
+
+.reveal figure img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 720px;   /* hard cap — 1000px canvas minus title+padding */
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid var(--ring-10);
+  box-shadow: var(--shadow-card);
+  background: var(--paper-white);
+}
+
+.reveal figure figcaption {
+  display: none;  /* default-suppress legacy/duplicated captions */
+}
+
+/* Crop the bottom 40px of slot images on specific slides where a Claude/MCP
+ * toast banner leaked into the capture (orchestrator confirmed acceptable,
+ * team-lead R3 directive). Scoped to data-slide so global images stay intact. */
+.reveal .slides section[data-slide="54"] figure {
+  overflow: hidden;
+  height: fit-content;
+}
+.reveal .slides section[data-slide="54"] figure img {
+  margin-bottom: -40px;
+}
+
+.reveal figure figcaption.figcaption-override {
+  display: block;
+  margin-top: 14px;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink-55);
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Placeholder card variant (if used directly) */
+.reveal .placeholder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  padding: var(--sp-4);
+  background: #FFF4E6;
+  border: 2px dashed var(--accent-orange);
+  border-radius: 10px;
+  color: var(--accent-orange);
+  font-family: var(--font-mono);
+  font-size: var(--size-body-sm);
+  text-align: center;
+}
+
+/* ---------- Slide-meta chip (top-right) ---------- */
+.reveal .slide-meta {
+  position: absolute;
+  top: 28px;
+  right: 40px;
+  display: flex;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  color: var(--ink-40);
+  letter-spacing: 0.04em;
+  z-index: 5;
+}
+.reveal .slide-meta .chip {
+  padding: 4px 14px;
+  border-radius: 9999px;
+  background: var(--cream-300);
+  color: var(--ink-70);
+  font-weight: 600;
+  font-size: var(--size-caption);
+}
+.reveal .slide-meta .block-tag {
+  padding: 4px 14px;
+  border-radius: 9999px;
+  background: var(--cream-400);
+  color: var(--ink-55);
+  font-size: var(--size-caption);
+}
+
+/* ---------- Callouts / analogy / explanation ---------- */
+.reveal aside.callout, .reveal .callout {
+  background: var(--callout-bg);
+  border-left: 6px solid var(--callout-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: var(--sp-3) 0 0;
+  font-size: var(--size-body-sm);
+  color: var(--ink);
+  line-height: 1.4;
+}
+.reveal aside.callout::before, .reveal .callout::before {
+  content: "💡 ";
+  margin-right: 4px;
+}
+.reveal aside.callout strong, .reveal .callout strong { color: var(--accent-warm); }
+
+.reveal .analogy-box {
+  background: var(--analogy-bg);
+  border-left: 6px solid var(--analogy-border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin: var(--sp-2) 0 var(--sp-3);
+  font-size: var(--size-body);
+  color: var(--ink);
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+/* .explanation = "목적" subtitle: hugs h2 above, sets bullet intent.
+   Per content-enrichment-writer's UX-13 reposition (now between h2 and ul). */
+.reveal .explanation {
+  font-size: var(--size-body);
+  color: var(--ink-55);
+  margin: -4px 0 var(--sp-2);
+  line-height: 1.35;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+.reveal .pending-flag {
+  position: absolute;
+  bottom: 44px;
+  right: 40px;
+  font-family: var(--font-mono);
+  font-size: var(--size-micro);
+  color: var(--accent-orange);
+  background: #FFF4E6;
+  border: 1px solid var(--accent-orange);
+  border-radius: 4px;
+  padding: 4px 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  z-index: 4;
+}
+
+/* ---------- Slide-type variants ---------- */
+/* Cover slide — targets both `.slide-cover` class (used by #101) and
+   bare `[data-slide="01"]` (UX-12: #01 has no class from render script). */
+.reveal .slides section.slide-cover,
+.reveal .slides section[data-slide="01"] {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(180deg, var(--cream-100) 0%, var(--cream-400) 100%);
+  padding: 96px 80px;
+  grid-template-columns: none !important;
+}
+/* In cover treatment, drop chip + figure entirely. */
+.reveal .slides section.slide-cover > .slide-meta,
+.reveal .slides section[data-slide="01"] > .slide-meta { display: none; }
+.reveal .slides section.slide-cover > figure,
+.reveal .slides section[data-slide="01"] > figure { display: none; }
+
+/* Duplicate-title guard: if both h1 and h2 exist in a cover section,
+   hide the h2 (render script emits both; h1 is the hero). */
+.reveal .slides section.slide-cover:has(> h1) > h2,
+.reveal .slides section[data-slide="01"]:has(> h1) > h2 { display: none; }
+
+/* Cover h1 / h2 styling — whichever one is visible renders as hero. */
+.reveal .slides section.slide-cover > h1,
+.reveal .slides section[data-slide="01"] > h1,
+.reveal .slides section.slide-cover > h2,
+.reveal .slides section[data-slide="01"] > h2 {
+  position: static;       /* override tutorial absolute h2 */
+  font-size: var(--size-hero);
+  letter-spacing: -0.02em;
+  padding-right: 0;
+  margin-bottom: var(--sp-4);
+  max-width: 1200px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.reveal .slides section.slide-cover > ul,
+.reveal .slides section[data-slide="01"] > ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto var(--sp-4);
+}
+.reveal .slides section.slide-cover > ul li,
+.reveal .slides section[data-slide="01"] > ul li {
+  font-size: var(--size-h3);
+  color: var(--ink-70);
+  margin-bottom: var(--sp-2);
+}
+.reveal .slides section.slide-cover > ul li::marker,
+.reveal .slides section[data-slide="01"] > ul li::marker { content: ""; }
+.reveal .slides section.slide-cover > .callout,
+.reveal .slides section.slide-cover > aside.callout,
+.reveal .slides section[data-slide="01"] > .callout,
+.reveal .slides section[data-slide="01"] > aside.callout {
+  margin: var(--sp-4) auto 0;
+  max-width: 720px;
+  text-align: center;
+  font-size: var(--size-body);
+}
+.slide-cover h1 {
+  font-size: var(--size-hero);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-3);
+}
+.slide-cover .subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--size-h3);
+  color: var(--ink-55);
+  font-weight: 400;
+  margin: var(--sp-2) 0 var(--sp-5);
+}
+.slide-cover .presenter {
+  font-size: var(--size-body-sm);
+  color: var(--ink-55);
+  margin-top: var(--sp-5);
+}
+
+/* Checkpoint ✅ — deeper green bg + 8px left accent bar (UX-18) */
+section[data-slide-type="checkpoint"] {
+  background: var(--check-bg) !important;
+  border-left: 8px solid var(--success-deep);
+}
+section[data-slide-type="checkpoint"] h2 { color: var(--success-deep); }
+section[data-slide-type="checkpoint"] h2::before {
+  content: "✓ ";
+  color: var(--success);
+  font-weight: 700;
+}
+section[data-slide-type="checkpoint"] .callout {
+  background: var(--paper-white);
+  border-left-color: var(--success);
+}
+
+/* Safety / reassurance — yellow bg + accent bar */
+section[data-slide-type="reassure"],
+section[data-slide-type="safety"] {
+  background: var(--safety-bg) !important;
+  border-left: 8px solid var(--safety-border);
+}
+section[data-slide-type="reassure"] h2::before,
+section[data-slide-type="safety"] h2::before {
+  content: "🤝 ";
+}
+
+/* Fallback / error — red bg + accent bar */
+section[data-visibility="uncounted"],
+section[data-slide-type="fallback"] {
+  background: var(--fallback-bg) !important;
+  border-left: 8px solid var(--accent);
+}
+section[data-visibility="uncounted"] h2,
+section[data-slide-type="fallback"] h2 { color: var(--accent); }
+section[data-visibility="uncounted"] h2::before,
+section[data-slide-type="fallback"] h2::before {
+  content: "⚠ ";
+  color: var(--accent);
+}
+
+/* Section opener / break — full-width centered, override grid */
+section[data-slide-type="opener"],
+section[data-slide-type="break"] {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--cream-100);
+}
+/* If opener accidentally has a figure, force single column */
+section[data-slide-type="opener"]:has(> figure),
+section[data-slide-type="break"]:has(> figure) {
+  display: flex !important;
+  grid-template-columns: none !important;
+}
+section[data-slide-type="opener"] h2 {
+  font-size: var(--size-hero);
+  letter-spacing: -0.015em;
+  padding-right: 0;
+}
+section[data-slide-type="break"] {
+  background: var(--ink);
+  color: var(--cream-bg);
+}
+section[data-slide-type="break"] h1,
+section[data-slide-type="break"] h2 {
+  color: var(--cream-bg);
+  font-size: var(--size-hero);
+  padding-right: 0;
+}
+section[data-slide-type="break"] p { color: var(--cream-300); }
+
+/* ---------- Tables ---------- */
+.reveal table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: var(--sp-2) 0;
+  font-size: var(--size-body-sm);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--ring-10);
+}
+.reveal table thead th {
+  background: var(--cream-300);
+  color: var(--ink);
+  font-weight: 600;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--ring-10);
+}
+.reveal table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ring-10);
+  background: var(--paper-white);
+  vertical-align: top;
+}
+.reveal table tbody tr:last-child td { border-bottom: none; }
+
+/* ---------- Chips / URL pills ---------- */
+.reveal .chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  background: var(--cream-400);
+  color: var(--ink-55);
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  font-weight: 500;
+}
+.reveal .url-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--cream-300);
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: var(--size-body-sm);
+  color: var(--ink);
+  border: 1px solid var(--ring-10);
+  word-break: break-all;
+}
+
+/* ---------- Hide notes ---------- */
+.reveal .notes, .reveal aside.notes { display: none; }
+
+/* ---------- Progress + slide-number ---------- */
+.reveal .progress { color: var(--accent); }
+.reveal .slide-number {
+  background: transparent;
+  color: var(--ink-40);
+  font-family: var(--font-mono);
+  font-size: var(--size-micro);
+  right: 20px;
+  bottom: 12px;
+}
+
+/* ====================================================================
+   STRUCTURAL SLIDE LAYOUTS (Phase 4 v2 — Task #2)
+   Custom templates for cover / banner / break / recap / benefit / closing.
+   Each overrides the default tutorial 2-col grid via its own flex body.
+   ==================================================================== */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* ---------- .slide-cover (new hero layout, overrides legacy #01 rules) ---------- */
+.reveal .slides section.slide-cover {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: left;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(229, 57, 53, 0.10), transparent 55%),
+    linear-gradient(160deg, var(--cream-100) 0%, var(--cream-400) 100%);
+  padding: 96px 120px;
+  grid-template-columns: none !important;
+}
+.reveal .slides section.slide-cover > .slide-meta { display: none; }
+.reveal .slides section.slide-cover .cover-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+.reveal .slides section.slide-cover .cover-brand {
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-2);
+}
+.reveal .slides section.slide-cover .cover-hero {
+  font-size: var(--size-hero);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--sp-3);
+  color: var(--ink);
+}
+.reveal .slides section.slide-cover .cover-subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--size-h2);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--ink-70);
+  margin: 0 0 var(--sp-4);
+}
+.reveal .slides section.slide-cover .cover-points {
+  list-style: none;
+  padding-left: 0;
+  margin: var(--sp-2) 0 var(--sp-3);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 32px;
+}
+.reveal .slides section.slide-cover .cover-points li {
+  font-size: var(--size-body-sm);
+  color: var(--ink-70);
+  line-height: 1.4;
+  padding-left: 22px;
+  position: relative;
+  margin: 0;
+}
+.reveal .slides section.slide-cover .cover-points li::before {
+  content: "▸";
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.reveal .slides section.slide-cover .cover-callout {
+  align-self: flex-start;
+  margin: var(--sp-3) 0 0;
+  max-width: 720px;
+  font-size: var(--size-body);
+}
+
+/* ---------- .slide-banner (실습 N 배너) ---------- */
+.reveal .slides section.slide-banner {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  background: var(--cream-100);
+  padding: 96px 120px;
+  border-left: 14px solid var(--accent);
+  grid-template-columns: none !important;
+}
+.reveal .slides section.slide-banner .banner-body {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.reveal .slides section.slide-banner .banner-label {
+  font-family: var(--font-mono);
+  font-size: var(--size-h3);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--sp-1);
+}
+.reveal .slides section.slide-banner .banner-title {
+  position: static !important;
+  font-size: var(--size-hero);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 var(--sp-3);
+  color: var(--ink);
+  padding-right: 0;
+}
+.reveal .slides section.slide-banner .banner-time {
+  display: flex;
+  gap: 14px;
+  margin: 0 0 var(--sp-4);
+  align-items: center;
+}
+.reveal .slides section.slide-banner .banner-window {
+  font-family: var(--font-mono);
+  font-size: var(--size-h3);
+  color: var(--ink-70);
+}
+.reveal .slides section.slide-banner .banner-duration {
+  font-family: var(--font-mono);
+  font-size: var(--size-body);
+  color: var(--paper-white);
+  background: var(--accent);
+  padding: 4px 18px;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+.reveal .slides section.slide-banner .banner-objectives {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reveal .slides section.slide-banner .banner-objectives li {
+  font-size: var(--size-body);
+  color: var(--ink);
+  padding-left: 28px;
+  position: relative;
+  margin: 0;
+}
+.reveal .slides section.slide-banner .banner-objectives li::before {
+  content: "✓";
+  color: var(--success-deep);
+  font-weight: 700;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* ---------- .slide-break (휴식) ---------- */
+.reveal .slides section.slide-break {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--ink);
+  color: var(--cream-bg);
+  padding: 96px 120px;
+  grid-template-columns: none !important;
+}
+.reveal .slides section.slide-break > .slide-meta { display: none; }
+.reveal .slides section.slide-break .break-body {
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.reveal .slides section.slide-break .break-icon {
+  font-size: 120px;
+  line-height: 1;
+  margin-bottom: var(--sp-2);
+}
+.reveal .slides section.slide-break .break-title {
+  position: static !important;
+  font-size: var(--size-hero);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--cream-bg);
+  margin: 0;
+  padding-right: 0;
+}
+.reveal .slides section.slide-break .break-next {
+  font-family: var(--font-mono);
+  font-size: var(--size-h3);
+  color: var(--accent-gold);
+  margin: 0 0 var(--sp-3);
+}
+.reveal .slides section.slide-break .break-notes {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  justify-content: center;
+}
+.reveal .slides section.slide-break .break-notes li {
+  font-size: var(--size-body-sm);
+  color: var(--cream-300);
+  margin: 0;
+}
+.reveal .slides section.slide-break .break-callout {
+  background: rgba(251, 192, 45, 0.14);
+  border-left: 6px solid var(--accent-gold);
+  color: var(--cream-bg);
+  margin-top: var(--sp-3);
+}
+.reveal .slides section.slide-break .break-callout::before { content: "⏱ "; }
+
+/* ---------- .slide-recap-card (요약 카드 그리드) ---------- */
+.reveal .slides section.slide-recap-card {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--cream-bg);
+  padding: 72px 108px 56px;
+  grid-template-columns: none !important;
+}
+.reveal .slides section.slide-recap-card .recap-body {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.reveal .slides section.slide-recap-card .recap-title {
+  position: static !important;
+  font-size: var(--size-h1);
+  margin: 0 0 var(--sp-2);
+  padding-right: 0;
+}
+.reveal .slides section.slide-recap-card .recap-explanation {
+  margin: 0 0 var(--sp-2);
+}
+.reveal .slides section.slide-recap-card .recap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+  margin: var(--sp-2) 0;
+}
+.reveal .slides section.slide-recap-card .recap-card {
+  background: var(--paper-white);
+  border: 1px solid var(--ring-10);
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow-ambient);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.reveal .slides section.slide-recap-card .recap-card-num {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1.3;
+  min-width: 30px;
+}
+.reveal .slides section.slide-recap-card .recap-card-text {
+  font-size: 24px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/* When ≥5 recap cards, switch to 3-column grid to keep 1000px canvas. */
+.reveal .slides section.slide-recap-card .recap-grid:has(> .recap-card:nth-child(5)) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ---------- .slide-benefit (수강 혜택) ---------- */
+.reveal .slides section.slide-benefit {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--cream-100) 0%, var(--cream-bg) 100%);
+  padding: 96px 120px;
+  grid-template-columns: none !important;
+}
+.reveal .slides section.slide-benefit .benefit-body {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.reveal .slides section.slide-benefit .benefit-title {
+  position: static !important;
+  font-size: var(--size-h1);
+  margin: 0 0 var(--sp-2);
+  padding-right: 0;
+}
+.reveal .slides section.slide-benefit .benefit-tools {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin: var(--sp-2) 0;
+}
+.reveal .slides section.slide-benefit .benefit-tool {
+  background: var(--paper-white);
+  border: 2px solid var(--ring-10);
+  border-radius: 12px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  box-shadow: var(--shadow-ambient);
+}
+.reveal .slides section.slide-benefit .benefit-tool-name {
+  font-size: var(--size-h3);
+  font-weight: 700;
+  color: var(--ink);
+}
+.reveal .slides section.slide-benefit .benefit-tool-sub {
+  font-size: var(--size-caption);
+  color: var(--ink-55);
+}
+.reveal .slides section.slide-benefit .benefit-tool-price {
+  font-family: var(--font-mono);
+  font-size: var(--size-body-sm);
+  color: var(--accent-orange);
+  font-weight: 600;
+  margin-top: 4px;
+}
+.reveal .slides section.slide-benefit .benefit-formula {
+  background: var(--callout-bg);
+  border: 2px solid var(--callout-border);
+  border-radius: 10px;
+  padding: 18px 24px;
+  font-size: var(--size-h3);
+  color: var(--ink);
+  text-align: center;
+  font-weight: 500;
+}
+.reveal .slides section.slide-benefit .benefit-formula strong {
+  color: var(--accent);
+  font-size: var(--size-h2);
+}
+.reveal .slides section.slide-benefit .benefit-notes {
+  list-style: disc;
+  padding-left: 28px;
+  margin: var(--sp-2) 0 0;
+}
+.reveal .slides section.slide-benefit .benefit-notes li {
+  font-size: var(--size-body-sm);
+  color: var(--ink-70);
+  margin-bottom: 6px;
+}
+
+/* ---------- .slide-closing (Q&A / FAQ / 수료) ---------- */
+.reveal .slides section.slide-closing {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--cream-100);
+  padding: 96px 120px;
+  grid-template-columns: none !important;
+}
+.reveal .slides section.slide-closing .closing-body {
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.reveal .slides section.slide-closing .closing-icon {
+  font-size: 96px;
+  line-height: 1;
+  margin-bottom: var(--sp-1);
+}
+.reveal .slides section.slide-closing .closing-title {
+  position: static !important;
+  font-size: var(--size-h1);
+  color: var(--ink);
+  margin: 0;
+  padding-right: 0;
+  text-align: center;
+}
+.reveal .slides section.slide-closing .closing-points {
+  list-style: none;
+  padding-left: 0;
+  margin: var(--sp-2) 0 0;
+  text-align: left;
+  max-width: 800px;
+}
+.reveal .slides section.slide-closing .closing-points li {
+  font-size: var(--size-body);
+  color: var(--ink-70);
+  margin-bottom: 10px;
+  padding-left: 22px;
+  position: relative;
+}
+.reveal .slides section.slide-closing .closing-points li::before {
+  content: "•";
+  color: var(--accent);
+  position: absolute;
+  left: 4px;
+  top: 0;
+  font-weight: 700;
+}
+.reveal .slides section.slide-closing .closing-qr {
+  width: 200px;
+  height: 200px;
+  margin: var(--sp-3) 0 0;
+  border: 3px dashed var(--ink-40);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--paper-white);
+}
+.reveal .slides section.slide-closing .closing-qr span {
+  font-family: var(--font-mono);
+  font-size: var(--size-h2);
+  font-weight: 700;
+  color: var(--ink-40);
+  letter-spacing: 0.1em;
+}
+.reveal .slides section.slide-closing .closing-qr small {
+  font-size: var(--size-caption);
+  color: var(--ink-55);
+}
+.reveal .slides section.slide-closing .closing-callout {
+  margin-top: var(--sp-3);
+  max-width: 720px;
+}
+
+/* ---------- Print / PDF ---------- */
+@media print {
+  .reveal .slides section { page-break-after: always; }
+}

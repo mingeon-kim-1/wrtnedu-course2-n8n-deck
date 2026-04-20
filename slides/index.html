@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소상공인 n8n — 정부지원금 자동알림 4시간 워크숍</title>
+
+  <!-- Pretendard -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <!-- Reveal.js 5.x core + white theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+
+  <!-- Course 2 custom theme -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- Reveal print stylesheet — required for ?print-pdf export to apply slide layout -->
+  <script>
+    (function(){
+      var href = window.location.search.match(/print-pdf/gi)
+        ? 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/css/print/pdf.css'
+        : 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/css/print/paper.css';
+      var l = document.createElement('link');
+      l.rel = 'stylesheet'; l.type = 'text/css'; l.href = href;
+      document.getElementsByTagName('head')[0].appendChild(l);
+    })();
+  </script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- =====================================================================
+     BLOCK A — 오프닝 (0:00–0:15, 15분)
+     slides: 01 02 03 04 05 06 07 08  (8 slides)
+     ===================================================================== -->
+
+<section data-slide="01" data-block="A" class="slide-cover">
+  <div class="slide-meta"><span class="chip">01</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <div class="cover-body">
+    <div class="cover-brand">WrtnEdu × 케미스트릿 강남역</div>
+    <h1 class="cover-hero">과정 2</h1>
+    <p class="cover-subtitle">AI가 찾아주는 내 가게 맞춤 정부지원금 (n8n 자동화)</p>
+    <h2 class="visually-hidden">과정 2 — AI가 찾아주는 내 가게 맞춤 정부지원금 (n8n 자동화)</h2>
+    <ul class="cover-points">
+      <li>4시간 실습 · 소상공인 맞춤 워크숍</li>
+      <li>완성 산출물: 매주 월요일 맞춤 공고 메일 + 시트 기록</li>
+      <li>준비물: 노트북 · Google 계정 · 사업자등록증 · 매출/업종 정보</li>
+      <li>뤼튼테크놀로지스 × 케미스트릿 강남역</li>
+    </ul>
+    <aside class="callout cover-callout">오늘 끝나면 = 자동화 1개 완성</aside>
+  </div>
+  <aside class="notes">안녕하세요 사장님. 오늘 4시간 동안 사장님 가게에 맞는 정부지원금 공고를 매주 월요일 오전 9시에 자동으로 메일로 받는 자동화 하나를 직접 완성하실 겁니다. 처음부터 만드는 게 아니라 제가 준비해 둔 워크플로우를 불러와서 사장님 정보 3칸만 고쳐 쓰시면 돼요.</aside>
+</section>
+
+<section data-slide="02" data-block="A">
+  <div class="slide-meta"><span class="chip">02</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>사장님, 이 돈을 놓치고 계십니다</h2>
+  <ul>
+    <li>정부지원금 연 수조 원 규모</li>
+    <li>요식업 사장 대부분 미신청</li>
+    <li>정보가 없어 못 받음</li>
+    <li>오늘 4시간 뒤 자동 알림 완성</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/07_final_results/02_newsletter_email_preview.png" alt="사장님, 이 돈을 놓치고 계십니다 — 02_newsletter_email_preview.png">
+  </figure>
+  <aside class="callout">오늘 만들 결과</aside>
+  <aside class="notes">정부지원금은 매년 수십조 원씩 풀리는데, 소상공인 사장님들 80%는 공고가 올라온 줄도 모르고 지나가세요. 오늘 수업의 출발점은 단순합니다 — 이 돈을 사장님이 놓치지 않게 하는 것.</aside>
+</section>
+
+<section data-slide="03" data-block="A">
+  <div class="slide-meta"><span class="chip">03</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>정부지원금 한 해 규모</h2>
+  <ul>
+    <li>중앙·지방 합계 수조 원 (출처: 기획재정부·중소벤처기업부 연간 예산서)</li>
+    <li>기업마당·보조금24·K-Startup 등 수백 건</li>
+    <li>신청자 적어 경쟁률 낮음</li>
+    <li>정보 먼저 아는 사람이 받음</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="정부지원금 한 해 규모 — placeholder_text_only.png">
+  </figure>
+  <aside class="notes">연 10조원 규모에 중소·소상공인 대상만 추려도 4조원이 넘습니다. 숫자가 너무 크면 실감이 안 나시죠. 그래서 오늘 개인 사장님 단위로 좁혀서 &#x27;우리 가게에 맞는 공고만&#x27; 골라 보내는 장치를 만들 겁니다.</aside>
+</section>
+
+<section data-slide="04" data-block="A">
+  <div class="slide-meta"><span class="chip">04</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>근데 사장님은 왜 못 받으셨을까요?</h2>
+  <ul>
+    <li>공고 사이트 매일 확인 어려움</li>
+    <li>가게에 맞는지 판단 막막</li>
+    <li>마감 지나서 알게 됨</li>
+    <li>&quot;나중에 해야지&quot; 반복</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="근데 사장님은 왜 못 받으셨을까요? — placeholder_text_only.png">
+  </figure>
+  <aside class="notes">사장님이 몰라서 못 받으신 게 아니라, 공고 사이트가 한두 곳이 아니고 매일 수십 개 올라오니까 확인이 불가능했던 거예요. 오늘은 AI가 대신 읽고 사장님 가게에 맞는 것만 메일로 보내줍니다.</aside>
+</section>
+
+<section data-slide="05" data-block="A">
+  <div class="slide-meta"><span class="chip">05</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>매주 월요일 9시, 자동 메일이 온다면?</h2>
+  <p class="explanation">매주 같은 시각에 자동 실행되는 자동화 흐름.</p>
+  <ul>
+    <li>사장님 대신 컴퓨터가 확인</li>
+    <li>가게에 맞는 공고만 골라 전달</li>
+    <li>n8n = 코드 없이 자동화 조립</li>
+    <li>레고 블록처럼 끼워 맞춤</li>
+  </ul>
+  <aside class="analogy-box">⏰ 시작 신호 = 오픈 준비 알람 시계</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="매주 월요일 9시, 자동 메일이 온다면? — placeholder_text_only.png">
+  </figure>
+  <aside class="notes">매주 월요일 오전 9시, 사장님 받은편지함에 &#x27;이번 주 내 가게 맞춤 공고&#x27;라는 제목으로 한 통씩 도착합니다. 컴퓨터를 켜 놓으실 필요도, 사이트에 들어가실 필요도 없어요.</aside>
+</section>
+
+<section data-slide="06" data-block="A">
+  <div class="slide-meta"><span class="chip">06</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>오늘 사장님이 만들 것</h2>
+  <p class="explanation">오늘은 만들지 않고 불러와 사장님 가게에 맞게 손봅니다.</p>
+  <ul>
+    <li>레시피 = 재료 → 순서 → 결과</li>
+    <li>재료: 정부 공고 자료</li>
+    <li>순서: 9블록 한 장에 펼침</li>
+    <li>결과: 매주 월요일 맞춤 메일</li>
+  </ul>
+  <aside class="analogy-box">📝 자동화 흐름 = 레시피 카드</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="오늘 사장님이 만들 것 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">레시피 한 장</aside>
+  <aside class="notes">오늘 만들 전체 그림입니다. 스케줄(알람) → 공고 API → 파싱 → AI 판정 → 분기 → 시트 기록 → 메일 발송 → 끝. 9개 블록이 레고처럼 연결된 구조고, 사장님은 가져와서 3칸만 바꾸시면 돼요.</aside>
+</section>
+
+<section data-slide="07" data-block="A">
+  <div class="slide-meta"><span class="chip">07</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>완성 데모 — 메일 받는 장면</h2>
+  <ul>
+    <li>매주 월요일 아침 메일 도착</li>
+    <li>우리 가게 맞춤 공고 한 줄 요약</li>
+    <li>상세링크 클릭 = 신청 페이지</li>
+    <li>사장님이 할 일: 메일 열기</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/07_final_results/02_newsletter_email_preview_clean.png" alt="완성 데모 — 메일 받는 장면 — 02_newsletter_email_preview_clean.png">
+    <figcaption class="figcaption-override">데모 영상은 강사 시연</figcaption>
+  </figure>
+  <aside class="notes">이게 완성됐을 때 실제로 도착하는 메일입니다. 제목·본문·상세 링크까지 자동으로 채워져요. 오늘 수업이 끝나기 전에 사장님 받은편지함에도 같은 메일이 들어가 있을 겁니다.</aside>
+</section>
+
+<section data-slide="08" data-block="A">
+  <div class="slide-meta"><span class="chip">08</span><span class="block-tag">블록 A · 오프닝</span></div>
+  <h2>오늘 3가지 약속 + 준비물</h2>
+  <ul>
+    <li>약속 1: n8n 가입·작업 공간</li>
+    <li>약속 2: 레시피 불러오기·손보기</li>
+    <li>약속 3: 매주 월요일 자동 실행 ON</li>
+    <li>준비물: 노트북 · Google 계정 · 사업자등록증 · 매출/업종 정보</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="오늘 3가지 약속 + 준비물 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">막히면 손 들기</aside>
+  <aside class="notes">세 가지 약속만 드릴게요. 첫째 n8n 작업 공간 하나 만들기, 둘째 워크플로우 불러와서 사장님 정보로 3칸 손보기, 셋째 한 번 실행해서 메일까지 확인하기. 준비물은 노트북·Google 계정·사업자등록증·매출/업종 메모. 중간에 헷갈리시면 바로 손 들어 주세요.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK B — n8n Cloud 가입과 첫 워크스페이스 (0:15–0:50, 35분)
+     slides: 09 10 11 12 13 14  (6 slides)
+     ===================================================================== -->
+
+<section data-slide="09" data-block="B">
+  <div class="slide-meta"><span class="chip">09</span><span class="block-tag">블록 B · n8n 가입</span></div>
+  <h2>n8n 가입 — 1단계: 회사 이메일 입력 (최소 14일 무료)</h2>
+  <p class="explanation">가입은 2단계 — 이메일 입력 → 이름/비밀번호 입력. (커리큘럼 &#x27;15일&#x27;은 구 버전; 현재 Cloud는 계정마다 최소 14일 ~ 최대 180일, 대시보드 카드에 남은 일수 표시.)</p>
+  <ul>
+    <li>app.n8n.cloud/register 접속</li>
+    <li>Company email 칸에 이메일 입력</li>
+    <li>Submit 클릭 → 다음 화면에서 이름·비밀번호·작업공간 이름 입력</li>
+    <li>신용카드 입력 없음</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/01_n8n_signup/09_signup_register_page_clean.png" alt="n8n 가입 — 1단계: 회사 이메일 입력 (최소 14일 무료) — 09_signup_register_page_clean.png">
+  </figure>
+  <aside class="callout">신용카드 없음</aside>
+  <aside class="notes">app.n8n.cloud/register 에 접속하셔서 이메일·이름·비밀번호만 입력하시면 됩니다. Start free 버튼 누르면 바로 사장님 전용 작업 공간이 생성돼요. 신용카드 입력 칸이 없다는 걸 꼭 확인해 주세요 — 자동 결제 위험이 없다는 뜻입니다.</aside>
+</section>
+
+<section data-slide="10" data-block="B">
+  <div class="slide-meta"><span class="chip">10</span><span class="block-tag">블록 B · n8n 가입</span></div>
+  <h2>작업 공간 주소 + 이메일 인증</h2>
+  <p class="explanation">사장님 전용 작업 공간 주소가 이메일로 도착합니다.</p>
+  <ul>
+    <li>주소 = (사장님이름).app.n8n.cloud</li>
+    <li>받은편지함에서 인증 링크 클릭</li>
+    <li>30~60초 후 작업 공간 준비</li>
+    <li>스팸함 확인 습관</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/01_n8n_signup/10_dashboard_workspace_ready_clean.png" alt="작업 공간 주소 + 이메일 인증 — 10_dashboard_workspace_ready_clean.png">
+  </figure>
+  <aside class="callout">메일 확인 필수</aside>
+  <aside class="notes">가입 직후 이메일로 인증 링크와 함께 사장님 전용 주소(`사장님이름.app.n8n.cloud`)가 도착합니다. 그 주소가 사장님 개인 작업 공간 URL이에요. 북마크에 저장해 두시면 다음부터 바로 들어가실 수 있습니다.</aside>
+</section>
+
+<section data-slide="11" data-block="B">
+  <div class="slide-meta"><span class="chip">11</span><span class="block-tag">블록 B · n8n 가입</span></div>
+  <h2>Dark → Light 모드로 바꾸기</h2>
+  <p class="explanation">기본 어두운 화면을 밝게 바꿔 눈의 피로를 줄입니다.</p>
+  <ul>
+    <li>Settings(설정) → Personalisation(개인 설정)</li>
+    <li>Color scheme(색상 테마) = Light(밝은 모드) 선택</li>
+    <li>흰 배경이 글씨 가독성 ↑</li>
+    <li>Cmd+(확대) · Cmd-(축소) · Windows: Ctrl+ · Ctrl- 확대 가능</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/01_n8n_signup/07_light_theme_selected_pre_save_clean.png" alt="Dark → Light 모드로 바꾸기 — 07_light_theme_selected_pre_save_clean.png">
+  </figure>
+  <aside class="callout">글씨 크게 Cmd+</aside>
+  <aside class="notes">기본 테마가 Dark(검정)인데, 뒷자리에서도 글씨가 잘 보이도록 Light(흰색) 테마로 바꿔 주세요. 설정 → Personal → Theme → Light. 딱 한 번만 바꾸시면 됩니다.</aside>
+</section>
+
+<section data-slide="12" data-block="B">
+  <div class="slide-meta"><span class="chip">12</span><span class="block-tag">블록 B · n8n 가입</span></div>
+  <h2>0/50 카운터 · Upgrade 배너 · Build with AI</h2>
+  <p class="explanation">수업 중 눈에 띄는 3개 배지·버튼 미리 구분해 두기.</p>
+  <ul>
+    <li>좌상단 0/50 = 자동 실행 한도</li>
+    <li>수업 중 2~3회만 사용</li>
+    <li>우상단 Upgrade Now = 무시 OK</li>
+    <li>Build with AI 버튼도 오늘 안 씀</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="0/50 카운터 · Upgrade 배너 · Build with AI — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">50회 중 2~3회만</aside>
+  <aside class="notes">대시보드 상단에 &#x27;0/50&#x27; 같은 카운터가 보이실 거예요. 이건 이번 달 자동화 실행 횟수를 세는 거고, 무료 체험 기간에는 50회 여유를 드립니다. Upgrade 배너는 무시하셔도 괜찮아요 — 오늘은 무료 범위 안에서만 움직입니다.</aside>
+</section>
+
+<section data-slide="13" data-block="B">
+  <div class="slide-meta"><span class="chip">13</span><span class="block-tag">블록 B · n8n 가입</span></div>
+  <h2>실습 전 1분 — 걱정 없애기</h2>
+  <ul>
+    <li>처음 화면 = 버튼 단순</li>
+    <li>글씨 작으면 Cmd + +(확대) · Windows: Ctrl + + 확대</li>
+    <li>한글·영문 키 위치 확인</li>
+    <li>막히면 바로 손 들기</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="실습 전 1분 — 걱정 없애기 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">혼자 애먹지 말기</aside>
+  <aside class="notes">실습 들어가기 전에 1분만 쉬어 가요. 오늘 실수해도 괜찮습니다. 틀려도 사장님 가게에는 아무 일도 안 일어나요. 코드를 외우실 필요도, 영어를 외우실 필요도 없어요 — 따라만 오시면 됩니다.</aside>
+</section>
+
+<section data-slide="14" data-block="B">
+  <div class="slide-meta"><span class="chip">14</span><span class="block-tag">블록 B · n8n 가입</span></div>
+  <h2>템플릿 말고 Start from scratch(빈 캔버스로 시작)</h2>
+  <p class="explanation">템플릿 함정을 피해 빈 캔버스에서 불러오기로 진행.</p>
+  <ul>
+    <li>첫 로그인 = 템플릿 6장 대시보드</li>
+    <li>Start from scratch(빈 캔버스로 시작) 초록 ✓ 클릭</li>
+    <li>템플릿 카드는 오늘 사용 안 함</li>
+    <li>빈 캔버스 = 사장님 작업판</li>
+  </ul>
+  <aside class="analogy-box">🔐 구글 계정 허락 = 가게 열쇠 복사</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/06_empty_canvas_start_from_scratch_clean.png" alt="템플릿 말고 Start from scratch(빈 캔버스로 시작) — 06_empty_canvas_start_from_scratch_clean.png">
+  </figure>
+  <aside class="callout">Start from scratch(빈 캔버스로 시작)</aside>
+  <aside class="notes">n8n 메인 화면에서 &#x27;+ Create Workflow&#x27; 누르시면 템플릿을 고르라고 뜨는데, 오늘은 &#x27;Start from scratch&#x27;(빈 캔버스)를 골라 주세요. 여기다가 제가 준비한 파일을 불러올 거예요.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK C — 휴식 #1 (0:50–1:00, 10분)
+     slides: 15  (1 slides)
+     ===================================================================== -->
+
+<section data-slide="15" data-block="C" class="slide-break" data-slide-type="break">
+  <div class="slide-meta"><span class="chip">15</span><span class="block-tag">블록 C · 휴식</span></div>
+  <div class="break-body">
+    <div class="break-icon" aria-hidden="true">⏱</div>
+    <h2 class="break-title">휴식 #1 — 10분</h2>
+    <p class="break-next">다음 → 실습 1 — 정부 공고 API 가져오기</p>
+    <ul class="break-notes">
+      <li>잠시 숨 돌리기</li>
+      <li>작업 공간 탭 닫지 말기</li>
+      <li>화장실 · 커피는 빠르게</li>
+      <li>다음 45분은 집중 실습</li>
+    </ul>
+    <aside class="callout break-callout">10분 타이머</aside>
+  </div>
+  <aside class="notes">첫 번째 휴식입니다. 10분 동안 잠시 물 한 잔 드시고, 눈 좀 쉬게 해 주세요. 브라우저 탭은 닫지 마시고 그대로 두시면 돼요. 돌아오시면 바로 실습 1 시작합니다.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK D — 실습 1: 정부 공고 API 불러오기 (1:00–1:45, 45분)
+     slides: 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30  (15 slides)
+     ===================================================================== -->
+
+<section data-slide="16" data-block="D" class="slide-banner">
+  <div class="slide-meta"><span class="chip">16</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <div class="banner-body">
+    <div class="banner-label">[실습 1]</div>
+    <h2 class="banner-title">정부지원사업 공고 가져오기</h2>
+    <div class="banner-time">
+      <span class="banner-window">1:00–1:45</span>
+      <span class="banner-duration">45분</span>
+    </div>
+    <ul class="banner-objectives">
+      <li>배울 것: API 키 → HTTP Request(자료 받아오기) → Code(파싱)</li>
+      <li>결과물: 공고 원본 데이터가 캔버스에 도착</li>
+      <li>커리큘럼 블록: 1:00~1:45 (45분)</li>
+      <li>커리큘럼 &#x27;기업마당&#x27; → 오늘은 K-Startup API (#17 참고)</li>
+    </ul>
+    <aside class="analogy-box banner-analogy">🍳 API = 주방 주문표</aside>
+    <aside class="callout banner-callout">실습 1 시작 (기업마당→K-Startup)</aside>
+  </div>
+  <aside class="notes">지금부터 첫 번째 실습 — 정부지원사업 공고를 인터넷에서 불러오는 구간입니다. 45분짜리 블록인데, 끝나고 나면 &#x27;내 가게 들어가는 자동화의 첫 숨&#x27;이 느껴지실 거예요. API라는 단어가 낯설어도 괜찮아요 — 주방 주문표 비유로 풀어 드립니다.</aside>
+</section>
+
+<section data-slide="17" data-block="D">
+  <div class="slide-meta"><span class="chip">17</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>오늘 API = K-Startup · 커리큘럼 &#x27;기업마당&#x27;도 같은 방식</h2>
+  <ul>
+    <li>오늘 수업 = K-Startup API (인증 불필요 · 더 안정적)</li>
+    <li>커리큘럼 기준 도구: 기업마당 (정부24 계열)</li>
+    <li>둘 다 공고 자료 제공 — 같은 방식(HTTP Request)으로 연결</li>
+    <li>워크플로우 파일의 URL만 바꾸면 기업마당도 동작</li>
+  </ul>
+  <aside class="analogy-box">🏢 API = 두 시청 건물 · 주소만 다름</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="오늘 API = K-Startup · 커리큘럼 &#x27;기업마당&#x27;도 같은 방식 — placeholder_text_only.png">
+    <figcaption class="figcaption-override">두 사이트 스크린샷 side-by-side (K-Startup 로고 + 기업마당 로고)</figcaption>
+  </figure>
+  <aside class="callout">같은 방식 · 다른 주소</aside>
+  <aside class="notes">오늘 사용할 공고 API는 K-Startup입니다. 커리큘럼에는 &#x27;기업마당&#x27;으로 적혀 있는데, 두 사이트가 같은 공고를 거의 똑같이 싣기 때문에 수업에서는 K-Startup 을 씁니다. API 키 발급 없이 바로 호출 가능해서 시간을 아낄 수 있어요. 워크플로우 파일의 URL만 바꾸면 나중에 기업마당으로도 똑같이 동작합니다.</aside>
+</section>
+
+<section data-slide="18" data-block="D">
+  <div class="slide-meta"><span class="chip">18</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>오늘은 만들지 않고 불러옵니다</h2>
+  <p class="explanation">처음부터 만들지 않고 불러와서 내 것으로 바꿉니다.</p>
+  <ul>
+    <li>완성된 레시피 카드 한 장</li>
+    <li>9블록이 한 번에 펼쳐짐</li>
+    <li>사장님 할 일: 3칸만 손보기</li>
+    <li>매주 월요일 자동 실행 ON까지</li>
+  </ul>
+  <aside class="analogy-box">📝 자동화 흐름 = 레시피 카드</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="오늘은 만들지 않고 불러옵니다 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">불러오기 = 받아쓰기</aside>
+  <aside class="notes">오늘은 워크플로우를 처음부터 만들지 않습니다. 제가 미리 만들어 둔 완성품을 불러와서 사장님 정보로 3칸만 고쳐 쓸 거예요. &#x27;재료 준비된 밀키트&#x27;라고 생각해 주세요.</aside>
+</section>
+
+<section data-slide="19" data-block="D">
+  <div class="slide-meta"><span class="chip">19</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>workflow.json 파일 받기</h2>
+  <p class="explanation">불러올 자동화 흐름 파일을 노트북에 준비.</p>
+  <ul>
+    <li>course2_kit 폴더 열기</li>
+    <li>workflow.json 파일 확인</li>
+    <li>다운로드 위치 메모</li>
+    <li>파일 한 개만 준비 OK</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="workflow.json 파일 받기 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">파일 한 개만</aside>
+  <aside class="notes">course2_kit 폴더 안에 workflow.json 이라는 파일이 있어요. 이 파일 하나가 9블록 전체 설계도입니다. 강사가 공유해 드린 링크에서 다운로드해 두시고, 바탕화면에 잠깐 놔 두세요.</aside>
+</section>
+
+<section data-slide="20" data-block="D">
+  <div class="slide-meta"><span class="chip">20</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>불러오기 3단계 = ⋯ 메뉴</h2>
+  <p class="explanation">메뉴 한 번 클릭으로 완성된 흐름을 내 작업 공간에 풀어놓기.</p>
+  <ul>
+    <li>우상단 ⋯ 아이콘 클릭</li>
+    <li>Import from file(파일에서 가져오기) 선택</li>
+    <li>workflow.json 파일 고르기</li>
+    <li>9블록 캔버스에 펼쳐짐</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/07_dots_menu_import_from_file_clean.png" alt="불러오기 3단계 = ⋯ 메뉴 — 07_dots_menu_import_from_file_clean.png">
+  </figure>
+  <aside class="callout">⋯ → Import from file(파일에서 가져오기)</aside>
+  <aside class="notes">n8n 작업 공간에서 워크플로우 불러오기는 3단계입니다. 우측 상단 ⋯(세 점 메뉴) → Import from file → 방금 받은 workflow.json 선택. 1분 안에 끝나요.</aside>
+</section>
+
+<section data-slide="21" data-block="D">
+  <div class="slide-meta"><span class="chip">21</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>불러오기 완료 — 9블록 한눈에</h2>
+  <p class="explanation">완성된 9블록이 한 번에 펼쳐진 상태를 시각 확인.</p>
+  <ul>
+    <li>블록 8개 가로로 연결</li>
+    <li>Gemini 아래 보조 블록 1개</li>
+    <li>3개 블록에 빨간 점 (Gemini·Sheets·Gmail)</li>
+    <li>빨간 점 = 다시 연결 필요</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/21_imported_9node_canvas_clean.png" alt="불러오기 완료 — 9블록 한눈에 — 21_imported_9node_canvas_clean.png">
+  </figure>
+  <aside class="callout">빨간 점 = 정상</aside>
+  <aside class="notes">불러오기가 끝나면 캔버스에 9개 블록이 가로로 쫙 펼쳐져요. Schedule Trigger → HTTP → Code → Gemini → IF → Set → Sheets → Gmail 순서입니다. 한눈에 보시고 &#x27;오, 이게 오늘 만들 거구나&#x27; 하시면 됩니다.</aside>
+</section>
+
+<section data-slide="22" data-block="D">
+  <div class="slide-meta"><span class="chip">22</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>블록 1: Schedule Trigger (알람)</h2>
+  <p class="explanation">시간표대로 흐름을 자동 시작하는 시작 신호 블록.</p>
+  <ul>
+    <li>역할: 매주 월요일 9시 알람</li>
+    <li>이미 Weeks · Mon · 9시 설정됨</li>
+    <li>수업 중엔 수동 실행만</li>
+    <li>활성화는 마지막 단계</li>
+  </ul>
+  <aside class="analogy-box">⏰ 시작 신호 = 오픈 준비 알람 시계</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/10_node1_schedule_trigger_panel_clean.png" alt="블록 1: Schedule Trigger (알람) — 10_node1_schedule_trigger_panel_clean.png">
+  </figure>
+  <aside class="callout">손보지 않음</aside>
+  <aside class="notes">첫 번째 블록은 시계 모양 Schedule Trigger입니다. 매주 월요일 오전 9시에 자동으로 시작하는 알람이에요. Interval=Weeks, Day=Monday, Hour=9 세 칸만 확인하시면 되고, 활성화는 맨 마지막 Publish 단계에서 켤 거예요.</aside>
+</section>
+
+<section data-slide="23" data-block="D">
+  <div class="slide-meta"><span class="chip">23</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>블록 2: 정부공고_API_호출 (HTTP)</h2>
+  <p class="explanation">주방에 주문표 한 장 넣으면 요리 한 상이 나오듯, 정해진 주소에 &quot;자료 주세요&quot; 한 번 묻고 가져옵니다.</p>
+  <ul>
+    <li>역할: K-Startup에 자료 요청</li>
+    <li>API = 주방 주문표 — 주문 한 장 → 자료 한 상자</li>
+    <li>URL · Method · Response Format 설정</li>
+    <li>Method(메서드)=GET · Format(응답 형식)=Text 고정</li>
+  </ul>
+  <aside class="analogy-box">🍳 API = 주방 주문표 · 📮 HTTP = 택배 배달원</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/11_node2_http_request_panel_clean.png" alt="블록 2: 정부공고_API_호출 (HTTP) — 11_node2_http_request_panel_clean.png">
+  </figure>
+  <aside class="callout">URL 이미 입력됨</aside>
+  <aside class="notes">두 번째 블록은 정부공고_API_호출. 인터넷에서 공고 데이터를 받아오는 블록이에요. URL·Method·Response Format 세 칸이 미리 채워져 있고, 사장님이 수정할 건 하나도 없습니다. &#x27;실행해 보기&#x27; 버튼만 눌러 보시면 JSON이 쏟아져 나옵니다.</aside>
+</section>
+
+<section data-slide="24" data-block="D">
+  <div class="slide-meta"><span class="chip">24</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>블록 3: 공고_파싱 (Code)</h2>
+  <p class="explanation">뭉쳐 온 자료에서 필요한 칸만 뽑는 정리 직원.</p>
+  <ul>
+    <li>역할: 덩어리를 8칸 정리</li>
+    <li>JavaScript 20줄 이미 작성됨</li>
+    <li>제목·주관기관·접수마감 추출</li>
+    <li>코드 읽기 부담 없음</li>
+  </ul>
+  <aside class="analogy-box">🧾 Code = 영수증 정리 직원</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/12_node3_code_parsing_panel_clean.png" alt="블록 3: 공고_파싱 (Code) — 12_node3_code_parsing_panel_clean.png">
+  </figure>
+  <aside class="callout">읽기만 하세요</aside>
+  <aside class="notes">세 번째 블록은 공고_파싱. 방금 받은 XML 덩어리에서 제목·주관기관·접수마감·상세링크 네 조각만 골라내는 JavaScript 20줄이 이미 써 있어요. 사장님이 코드를 읽으실 필요는 없습니다 — &#x27;텍스트 정리기&#x27;라고만 이해하시면 돼요.</aside>
+</section>
+
+<section data-slide="25" data-block="D" data-slide-type="reassure">
+  <div class="slide-meta"><span class="chip">25</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>[안심] 가게 열쇠 복사 허락</h2>
+  <p class="explanation">복사된 열쇠로 지정한 범위만 대신 사용.</p>
+  <ul>
+    <li>구글 본사에 허락 한 번</li>
+    <li>Sheets·Gmail 열쇠만 복사</li>
+    <li>비밀번호는 구글에만</li>
+    <li>&quot;확인되지 않은 앱&quot; 경고 없음</li>
+  </ul>
+  <aside class="analogy-box">🔐 구글 계정 허락 = 가게 열쇠 복사</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="[안심] 가게 열쇠 복사 허락 — placeholder_text_only.png">
+    <figcaption class="figcaption-override">🔐 가게 열쇠 복사 개념도 — 원본 열쇠(비밀번호)는 구글에, 복사본만 n8n에</figcaption>
+  </figure>
+  <aside class="callout">열쇠만 n8n에</aside>
+  <aside class="notes">자, 여기서 잠깐 안심하실 대목이 있어요. 앞으로 나올 &#x27;Sign in with Google&#x27;·&#x27;Allow&#x27; 같은 화면이 조금 무서우실 수 있는데, 이건 &#x27;제 가게 열쇠를 복사해서 n8n이 대신 쓰게 해 준다&#x27;는 뜻입니다. 복사본이라 사장님 원본 계정은 그대로고, 언제든 Revoke 버튼으로 돌려받을 수 있어요.</aside>
+</section>
+
+<section data-slide="26" data-block="D">
+  <div class="slide-meta"><span class="chip">26</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>다시 연결 1/3 — Gemini 출입증 번호</h2>
+  <p class="explanation">AI가 쓰는 출입증 번호를 로그인 정보 꾸러미에 저장. (Sheets·Gmail까지 같은 흐름을 세 번 반복합니다.)</p>
+  <ul>
+    <li>같은 동작 ×3 중 1번째</li>
+    <li>Gemini Chat Model 블록 더블클릭</li>
+    <li>자격증명(Credential) → + Create New(새로 만들기)</li>
+    <li>API Key 칸에 AIza... 붙여넣기</li>
+    <li>Save → 초록 Connection tested</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/26_gemini_credential_bound_clean.png" alt="다시 연결 1/3 — Gemini 출입증 번호 — 26_gemini_credential_bound_clean.png">
+  </figure>
+  <aside class="callout">AIza... 붙여넣기</aside>
+  <aside class="notes">가져온 워크플로우에는 빨간 점이 몇 군데 떠 있어요. &#x27;자격증명을 다시 골라주세요&#x27;라는 뜻입니다. 첫 번째로 Gemini_맞춤도_판정 블록을 더블클릭하시고, 하단 Google Gemini Chat Model 의 Credential 에서 &#x27;Gemini_API&#x27;를 고르시거나 &#x27;+ Create New&#x27;로 새로 만드시면 돼요.</aside>
+</section>
+
+<section data-slide="27" data-block="D">
+  <div class="slide-meta"><span class="chip">27</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>다시 연결 2/3 — Sheets Sign in with Google(구글로 로그인)</h2>
+  <p class="explanation">한 번 클릭으로 구글에 Sheets 열쇠 복사 허락.</p>
+  <ul>
+    <li>같은 동작 ×3 중 2번째</li>
+    <li>시트_기록 블록 더블클릭</li>
+    <li>자격증명(Credential) → + Create New(새로 만들기)</li>
+    <li>Sign in with Google(구글로 로그인) 큰 버튼</li>
+    <li>팝업에서 본인 구글 계정 클릭</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/27_credential_signin_clean.png" alt="다시 연결 2/3 — Sheets Sign in with Google(구글로 로그인) — 27_credential_signin_clean.png">
+  </figure>
+  <aside class="callout">본인 계정 선택</aside>
+  <aside class="notes">두 번째로 시트_기록 블록 더블클릭. Credential 칸에서 &#x27;Sign in with Google&#x27; 버튼을 누르시면 팝업이 뜨고, 사장님 본인 Google 계정을 고르시면 됩니다. 승인 한 번만 하면 끝이에요.</aside>
+</section>
+
+<section data-slide="28" data-block="D">
+  <div class="slide-meta"><span class="chip">28</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>계정 선택 → 다음 허락 화면에서 Allow</h2>
+  <p class="explanation">계정 선택(이 화면) → 범위 확인 → Allow 까지 2단계. Sheets 열쇠 복사 최종 승인.</p>
+  <ul>
+    <li>팝업에 내 Google 계정 목록 표시</li>
+    <li>사장님 본인 계정 한 번 클릭</li>
+    <li>다음 화면에 Sheets 범위 + 체크박스 · 큰 Allow 버튼</li>
+    <li>Allow 한 번 → 팝업 자동 닫힘</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/28_account_picker_clean.png" alt="계정 선택 → 다음 허락 화면에서 Allow — 28_account_picker_clean.png">
+    <figcaption class="figcaption-override">Google 계정 선택 팝업 — 본인 계정 한 번 클릭 후 다음 Allow 화면으로</figcaption>
+  </figure>
+  <aside class="callout">계정 선택 → Allow</aside>
+  <aside class="notes">Google 계정 선택 팝업이 뜨면 사장님 본인 계정을 한 번 클릭해 주세요. 그 다음 화면에서 Google이 &#x27;이 앱에 Sheets 권한 허용하시겠습니까?&#x27;라고 묻고 체크박스들이 이미 체크된 채 큰 Allow 버튼이 보일 거예요. 그 Allow를 한 번 누르시면 팝업이 자동으로 닫히고 자격증명이 생성됩니다.</aside>
+</section>
+
+<section data-slide="29" data-block="D">
+  <div class="slide-meta"><span class="chip">29</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>다시 연결 3/3 — Gmail 같은 방법 (마지막)</h2>
+  <p class="explanation">Gmail도 같은 방식으로 열쇠 복사 한 번 더. 이 한 번으로 반복 끝.</p>
+  <ul>
+    <li>같은 동작 ×3 중 3번째 — 이걸로 끝</li>
+    <li>뉴스레터_발송 블록 더블클릭</li>
+    <li>자격증명(Credential) → + Create New(새로 만들기)</li>
+    <li>같은 구글 계정 선택</li>
+    <li>허락 스코프에 &quot;보내기&quot; 체크</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/29_gmail_credential_signin_clean.png" alt="다시 연결 3/3 — Gmail 같은 방법 (마지막) — 29_gmail_credential_signin_clean.png">
+  </figure>
+  <aside class="callout">같은 계정으로</aside>
+  <aside class="notes">세 번째로 뉴스레터_발송(Gmail) 블록 더블클릭. 똑같은 방식으로 &#x27;Sign in with Google&#x27; → 같은 계정 선택 → Allow. Sheets와 Gmail을 같은 Google 계정으로 연결하시면 제일 깔끔합니다.</aside>
+</section>
+
+<section data-slide="30" data-block="D" data-slide-type="checkpoint">
+  <div class="slide-meta"><span class="chip">30</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>[체크포인트] 빨간 점 0개 — 준비 완료</h2>
+  <ul>
+    <li>9블록 모두 정상 아이콘</li>
+    <li>Connected 배지 3개 초록</li>
+    <li>Credential not set 메시지 없음</li>
+    <li>손보기 준비 완료</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/00_canvas_9block_overview_clean.png" alt="[체크포인트] 빨간 점 0개 — 준비 완료 — 00_canvas_9block_overview_clean.png">
+  </figure>
+  <aside class="callout">빨간 점 0개 = 정상</aside>
+  <aside class="notes">체크포인트 시간이에요. 캔버스를 한 번 둘러보시고 빨간 점이 하나도 남아 있지 않으면 성공입니다. 빨간 점이 아직 남아 있으면 그 블록만 다시 더블클릭해서 Credential 칸을 다시 고르시면 돼요.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK E — 휴식 #2 (1:45–1:55, 10분)
+     slides: 31  (1 slides)
+     ===================================================================== -->
+
+<section data-slide="31" data-block="E" class="slide-break" data-slide-type="break">
+  <div class="slide-meta"><span class="chip">31</span><span class="block-tag">블록 E · 휴식</span></div>
+  <div class="break-body">
+    <div class="break-icon" aria-hidden="true">⏱</div>
+    <h2 class="break-title">휴식 #2 — 10분</h2>
+    <p class="break-next">다음 → 실습 2 — Gemini 맞춤도 판정</p>
+    <ul class="break-notes">
+      <li>1:45~1:55 커리큘럼 공식 휴식</li>
+      <li>실습 1 끝 · 실습 2 시작 전</li>
+      <li>작업 공간 탭 닫지 말기</li>
+      <li>돌아오면 Gemini 블록부터</li>
+    </ul>
+    <aside class="callout break-callout">10분 타이머</aside>
+  </div>
+  <aside class="notes">두 번째 휴식. 10분 쉬어 가요. 브라우저 탭은 그대로 두시고, 화장실·커피만 다녀오셔도 됩니다. 돌아오시면 실습 2 — AI한테 판단을 맡기는 구간이에요.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK F — 실습 2: AI가 내 가게에 맞는지 판단 (1:55–2:40, 45분)
+     slides: 32 33 34 35 36 37 38 39 40 41  (10 slides)
+     ===================================================================== -->
+
+<section data-slide="32" data-block="F" class="slide-banner">
+  <div class="slide-meta"><span class="chip">32</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <div class="banner-body">
+    <div class="banner-label">[실습 2]</div>
+    <h2 class="banner-title">Gemini가 공고를 골라주기</h2>
+    <div class="banner-time">
+      <span class="banner-window">1:55–2:40</span>
+      <span class="banner-duration">45분</span>
+    </div>
+    <ul class="banner-objectives">
+      <li>배울 것: Gemini API 키 → Chat Model → 프롬프트 작성</li>
+      <li>결과물: 우리 가게 맞는 공고만 통과</li>
+      <li>커리큘럼 블록: 1:55~2:40 (45분)</li>
+      <li>이 실습이 끝나면 = AI가 대신 공고 읽고 판단</li>
+    </ul>
+    <aside class="analogy-box banner-analogy">👨‍🍳 Gemini = 20년차 홀 매니저</aside>
+    <aside class="callout banner-callout">실습 2 시작</aside>
+  </div>
+  <aside class="notes">실습 2 시작. 지금부터 45분 동안은 AI한테 &#x27;이 공고가 우리 가게에 맞는지&#x27;를 물어보게 할 거예요. Gemini 블록 안에 이미 프롬프트가 써 있고, 사장님이 바꿀 건 딱 세 줄 — 가게 이름·업종·지역입니다.</aside>
+</section>
+
+<section data-slide="33" data-block="F">
+  <div class="slide-meta"><span class="chip">33</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>블록 4: Gemini_맞춤도_판정</h2>
+  <p class="explanation">사장님 대신 공고를 읽고 우리 가게용인지 골라줍니다.</p>
+  <ul>
+    <li>역할: AI가 공고 적합도 판단</li>
+    <li>Prompt Type(프롬프트 유형)=Define below(아래에 정의)</li>
+    <li>질문글 5줄 이미 작성됨</li>
+    <li>한식당 예시 페르소나 기본값</li>
+  </ul>
+  <aside class="analogy-box">👨‍🍳 Gemini = 20년차 홀 매니저</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/13_node4_gemini_prompt_panel_clean.png" alt="블록 4: Gemini_맞춤도_판정 — 13_node4_gemini_prompt_panel_clean.png">
+  </figure>
+  <aside class="callout">페르소나 손볼 예정</aside>
+  <aside class="notes">블록 4번은 Gemini_맞춤도_판정. 공고 제목·본문을 받아서 &#x27;사장님 가게에 맞음/안 맞음&#x27;을 JSON으로 답해 주는 AI 블록입니다. 지금 더블클릭하시면 프롬프트 전문이 보여요.</aside>
+</section>
+
+<section data-slide="34" data-block="F">
+  <div class="slide-meta"><span class="chip">34</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>블록 4-보조: Gemini Chat Model</h2>
+  <p class="explanation">AI 본체에 꽂는 점선 보조 블록. 모델과 출입증 번호만 지정.</p>
+  <ul>
+    <li>역할: 매니저 머릿속 AI (보조 블록 / Sub-node)</li>
+    <li>모델 = gemini-2.5-flash</li>
+    <li>2.0 계열보다 안정적·빠름</li>
+    <li>로그인 정보 꾸러미 = Gemini_API (자격증명 / Credential)</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/14_node5_gemini_model_with_credential_clean.png" alt="블록 4-보조: Gemini Chat Model — 14_node5_gemini_model_with_credential_clean.png">
+    <figcaption class="figcaption-override">보조 블록 (Sub-node) — 상위 블록에 자동 부착</figcaption>
+  </figure>
+  <aside class="callout">2.5-flash 고정</aside>
+  <aside class="notes">4번 아래 작은 보조 블록이 하나 딸려 있어요. Gemini Chat Model — 실제로 AI를 돌리는 엔진 파트입니다. 모델은 gemini-2.5-flash 로 고정돼 있고, 사장님이 바꾸실 건 없습니다.</aside>
+</section>
+
+<section data-slide="35" data-block="F">
+  <div class="slide-meta"><span class="chip">35</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>블록 5: 공고_매치_분기 (IF)</h2>
+  <p class="explanation">조건 맞으면 안쪽, 아니면 정중히 돌려보내는 문지기.</p>
+  <ul>
+    <li>역할: 손님 구분 줄</li>
+    <li>수업 모드 = 1 equals 1 항상 통과</li>
+    <li>Left Value=1 · Right Value=1 이미 입력</li>
+    <li>운영 모드는 자료집에서</li>
+  </ul>
+  <aside class="analogy-box">🚦 IF = 손님 구분 줄</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/35_if_node_conditions_panel_clean.png" alt="블록 5: 공고_매치_분기 (IF) — 35_if_node_conditions_panel_clean.png">
+  </figure>
+  <aside class="callout">1=1 = 항상 통과 (수업 모드). 이 칸은 손대지 마세요.</aside>
+  <aside class="notes">블록 5번은 IF(분기). &#x27;AI가 맞다고 판단한 공고만 다음으로 보내자&#x27;라는 스위치예요. 수업 중엔 &#x27;항상 참&#x27;으로 두고 모든 공고가 다음 단계로 가게 합니다. 수업 후에는 &#x27;`match=true`인 공고만&#x27; 조건으로 바꾸시면 됩니다.</aside>
+</section>
+
+<section data-slide="36" data-block="F">
+  <div class="slide-meta"><span class="chip">36</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>이번 45분 — 3칸 손보기</h2>
+  <p class="explanation">레시피 3칸만 바꾸면 사장님 가게 맞춤 자동화가 됩니다.</p>
+  <ul>
+    <li>손보기 1: AI 질문글</li>
+    <li>손보기 2: 메일 받는 사람</li>
+    <li>손보기 3: 시트 주소</li>
+    <li>오늘 패턴을 내 것으로</li>
+  </ul>
+  <aside class="analogy-box">🔧 손보기 = 내 가게 정보로 3칸만 교체</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="이번 45분 — 3칸 손보기 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">3칸만 내 것으로</aside>
+  <aside class="notes">이번 45분 동안 사장님이 손볼 칸은 딱 세 곳입니다. 가게 이름·업종·지역. 똑같은 동작 세 번이니까 금방 끝나요. 반복적이어서 졸리실 수 있는데, 이 구간만 넘기면 자동화가 내 가게 이야기로 바뀝니다.</aside>
+</section>
+
+<section data-slide="37" data-block="F">
+  <div class="slide-meta"><span class="chip">37</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>손보기 1 열기 — Gemini 블록 더블클릭</h2>
+  <p class="explanation">AI 질문글(프롬프트)이 들어있는 칸 찾기.</p>
+  <ul>
+    <li>Gemini_맞춤도_판정 블록 클릭</li>
+    <li>오른쪽 설정 패널 오픈</li>
+    <li>Prompt Type(프롬프트 유형)=Define below(아래에 정의) 확인</li>
+    <li>Text 칸에 질문글 5줄 표시</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/13_node4_gemini_prompt_panel_clean.png" alt="손보기 1 열기 — Gemini 블록 더블클릭 — 13_node4_gemini_prompt_panel_clean.png">
+  </figure>
+  <aside class="callout">Text 칸 주목</aside>
+  <aside class="notes">손보기 1 시작. Gemini_맞춤도_판정 블록을 더블클릭하시면 오른쪽에 프롬프트 전문이 열립니다. 스크롤 내려 보시면 &#x27;가마솥식당&#x27;이라는 예시 가게가 들어 있어요. 그 부분을 찾아 주세요.</aside>
+</section>
+
+<section data-slide="38" data-block="F">
+  <div class="slide-meta"><span class="chip">38</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>현재 질문글 읽어보기</h2>
+  <p class="explanation">지금 들어있는 예시 페르소나를 먼저 읽고 위치 파악.</p>
+  <ul>
+    <li>&quot;서울에서 작은 한식당&quot;</li>
+    <li>예시 상호 3회 등장 (교체 대상)</li>
+    <li>공고 제목·대상·분류 변수</li>
+    <li>JSON 응답 요청 문장</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/13_node4_gemini_prompt_panel_clean.png" alt="현재 질문글 읽어보기 — 13_node4_gemini_prompt_panel_clean.png">
+  </figure>
+  <aside class="callout">상호 위치 찾기</aside>
+  <aside class="notes">먼저 현재 질문글(프롬프트)을 처음부터 끝까지 한 번 쭉 읽어 주세요. 내용을 이해하실 필요는 없고, &#x27;어디에 가게 이름이 들어가 있구나&#x27; 정도만 감 잡으시면 됩니다.</aside>
+</section>
+
+<section data-slide="39" data-block="F" data-slide-type="reassure">
+  <div class="slide-meta"><span class="chip">39</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>[안심] 프롬프트는 문장이에요</h2>
+  <ul>
+    <li>문법 틀려도 AI 알아들음</li>
+    <li>복붙 후 이름만 바꿔도 OK</li>
+    <li>3줄만 교체하면 끝</li>
+    <li>긴장할 필요 없음</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="[안심] 프롬프트는 문장이에요 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">복붙 OK</aside>
+  <aside class="notes">프롬프트가 길어서 부담되실 수 있는데, 안심하세요 — 이건 그냥 AI한테 보내는 &#x27;한국어 질문글&#x27;이에요. 문법·띄어쓰기 틀려도 AI가 알아서 이해합니다. 영어도 코드도 아니에요.</aside>
+</section>
+
+<section data-slide="40" data-block="F">
+  <div class="slide-meta"><span class="chip">40</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>바꿀 부분 3줄 — 가게·업종·지역</h2>
+  <p class="explanation">질문글에서 딱 3곳만 내 가게 정보로 교체.</p>
+  <ul>
+    <li>가게 이름 → 사장님 상호</li>
+    <li>업종 → 분식·카페·치킨</li>
+    <li>지역 → 본인 동네</li>
+    <li>다른 줄은 건드리지 말기</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="바꿀 부분 3줄 — 가게·업종·지역 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">3줄만 손보기</aside>
+  <aside class="notes">바꿀 부분은 딱 세 줄입니다. 가게 이름 — 상호명, 업종 — 음식점 종류, 지역 — 시·군·구. 예를 들어 &#x27;가마솥식당 · 한식당 · 서울 강남&#x27; 이 기본값이에요.</aside>
+</section>
+
+<section data-slide="41" data-block="F">
+  <div class="slide-meta"><span class="chip">41</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
+  <h2>교체하기 예시 — 김밥천국 상계점</h2>
+  <p class="explanation">before/after 비교로 교체 결과 시각 확인.</p>
+  <ul>
+    <li>가마솥식당 → 김밥천국 상계점</li>
+    <li>한식당 → 분식집</li>
+    <li>서울 → 서울 노원구</li>
+    <li>패널 밖 클릭 = 자동 저장</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/41_gemini_prompt_panel_clean.png" alt="교체하기 예시 — 김밥천국 상계점 — 41_gemini_prompt_panel_clean.png">
+  </figure>
+  <aside class="callout">저장 자동</aside>
+  <aside class="notes">실제로 어떻게 바꾸는지 예시로 보여드릴게요. &#x27;가마솥식당 → 김밥천국 상계점&#x27;, &#x27;한식당 → 김밥·분식&#x27;, &#x27;서울 강남 → 서울 노원구&#x27;. 사장님 가게 이야기로 통째로 덮어쓰시면 됩니다.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK G — 휴식 #3 (2:40–2:50, 10분)
+     slides: 42  (1 slides)
+     ===================================================================== -->
+
+<section data-slide="42" data-block="G" class="slide-break" data-slide-type="break">
+  <div class="slide-meta"><span class="chip">42</span><span class="block-tag">블록 G · 휴식</span></div>
+  <div class="break-body">
+    <div class="break-icon" aria-hidden="true">⏱</div>
+    <h2 class="break-title">휴식 #3 — 10분</h2>
+    <p class="break-next">다음 → 실습 3 — Sheets + Gmail 발송</p>
+    <ul class="break-notes">
+      <li>2:40~2:50 커리큘럼 공식 휴식</li>
+      <li>실습 2 끝 · 실습 3 시작 전</li>
+      <li>작업 공간 탭 닫지 말기</li>
+      <li>돌아오면 Sheets·Gmail 손보기부터</li>
+    </ul>
+    <aside class="callout break-callout">10분 타이머</aside>
+  </div>
+  <aside class="notes">세 번째 휴식입니다. 10분 쉬어 가세요. 여기까지 오셨으면 오늘 수업의 절반을 넘기신 거예요. 돌아오시면 실습 3 — 시트에 쌓고 메일로 받는 진짜 하이라이트 구간입니다.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK H — 실습 3: 시트 저장 + 메일 발송 (2:50–3:35, 45분)
+     slides: 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60  (18 slides)
+     ===================================================================== -->
+
+<section data-slide="43" data-block="H" class="slide-banner">
+  <div class="slide-meta"><span class="chip">43</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <div class="banner-body">
+    <div class="banner-label">[실습 3]</div>
+    <h2 class="banner-title">시트에 쌓고 메일로 알림</h2>
+    <div class="banner-time">
+      <span class="banner-window">2:50–3:35</span>
+      <span class="banner-duration">45분</span>
+    </div>
+    <ul class="banner-objectives">
+      <li>배울 것: Sheets → IF 분기 → Gmail → Publish 버튼 (=커리큘럼 &#x27;활성화 토글&#x27;)</li>
+      <li>결과물: 매주 월요일 맞춤 공고 메일 발송</li>
+      <li>커리큘럼 블록: 2:50~3:35 (45분)</li>
+      <li>이 실습이 끝나면 = 자동화 완성 + 운영 시작</li>
+    </ul>
+    <aside class="analogy-box banner-analogy">📒📨 Sheets + Gmail = 장부 기입 + 우체부</aside>
+    <aside class="callout banner-callout">실습 3 시작</aside>
+  </div>
+  <aside class="notes">실습 3 시작. 앞 두 실습에서 만든 흐름을 사장님 구글 시트에 한 줄씩 쌓고, 사장님 Gmail 로 메일을 보내는 구간이에요. 오늘 수업이 끝나는 건 이 블록입니다. 45분 안에 사장님 받은편지함에 메일이 딱 하나 도착하게 할 거예요.</aside>
+</section>
+
+<section data-slide="44" data-block="H">
+  <div class="slide-meta"><span class="chip">44</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>블록 6: 공고_데이터_재구성 (Set)</h2>
+  <p class="explanation">시트에 담기 전 필요한 4칸만 깔끔히 재포장.</p>
+  <ul>
+    <li>역할: 4칸 재포장</li>
+    <li>제목·주관기관·접수마감·상세링크</li>
+    <li>앞 블록의 칸 값 꺼내쓰기</li>
+    <li>시트 모양에 맞춰 정리</li>
+  </ul>
+  <aside class="analogy-box">📦 Set = 포장 직원</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/44_set_node_panel_clean.png" alt="블록 6: 공고_데이터_재구성 (Set) — 44_set_node_panel_clean.png">
+  </figure>
+  <aside class="callout">4칸 정확히</aside>
+  <aside class="notes">블록 6번은 공고_데이터_재구성 (Set). IF 뒤에는 `$json` 대신 `$(&#x27;공고_파싱&#x27;).item.json.X` 로 노드 이름을 직접 불러야 해요. 이 Set 블록이 4개 키(제목·주관기관·접수마감·상세링크)를 깔끔하게 재포장하는 베스트 프랙티스 패턴입니다.</aside>
+</section>
+
+<section data-slide="45" data-block="H">
+  <div class="slide-meta"><span class="chip">45</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>블록 7: 시트_기록 (Google Sheets)</h2>
+  <p class="explanation">4칸을 구글 시트 한 행으로 쌓아두는 장부 담당.</p>
+  <ul>
+    <li>역할: 시트 한 줄 추가</li>
+    <li>Resource(대상)=Sheet(시트) · Operation(작업)=Append(행 추가)</li>
+    <li>매핑 = Map Automatically(자동 매핑)</li>
+    <li>documentId 손볼 예정</li>
+  </ul>
+  <aside class="analogy-box">📒 Sheets = 장부 기입</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/45_sheets_node_panel_clean.png" alt="블록 7: 시트_기록 (Google Sheets) — 45_sheets_node_panel_clean.png">
+  </figure>
+  <aside class="callout">documentId 손볼 예정</aside>
+  <aside class="notes">블록 7번은 시트_기록 (Google Sheets). 매주 새 공고 한 줄을 사장님 구글 시트 맨 아래에 덧붙이는 블록이에요. 사장님이 손보실 건 &#x27;시트 주소&#x27; 한 칸입니다.</aside>
+</section>
+
+<section data-slide="46" data-block="H">
+  <div class="slide-meta"><span class="chip">46</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>블록 8: 뉴스레터_발송 (Gmail)</h2>
+  <p class="explanation">본문·받는 사람만 주면 사장님 이름으로 발송.</p>
+  <ul>
+    <li>역할: 사장님께 HTML 메일</li>
+    <li>sendTo = 예시 이메일 (수업 후 본인 메일로 교체)</li>
+    <li>subject · HTML 본문 이미 작성</li>
+    <li>sendTo 손볼 예정</li>
+  </ul>
+  <aside class="analogy-box">📨 Gmail = 대신 보내주는 우체부</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/46_gmail_node_panel_clean.png" alt="블록 8: 뉴스레터_발송 (Gmail) — 46_gmail_node_panel_clean.png">
+  </figure>
+  <aside class="callout">sendTo 손볼 예정</aside>
+  <aside class="notes">블록 8번은 뉴스레터_발송 (Gmail). 시트에 쌓은 데이터를 바로 사장님 메일로 보내는 마지막 블록입니다. HTML 본문이 이미 잘 꾸며져 있고, 사장님이 바꿀 건 &#x27;받을 메일 주소&#x27; 한 칸이에요.</aside>
+</section>
+
+<section data-slide="47" data-block="H">
+  <div class="slide-meta"><span class="chip">47</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>손보기 2 열기 — Gmail 블록 To 칸</h2>
+  <p class="explanation">우체부에게 사장님 본인 주소를 알려주는 칸.</p>
+  <ul>
+    <li>뉴스레터_발송 블록 더블클릭</li>
+    <li>To 칸에 현재 값 확인</li>
+    <li>예시 이메일이 들어 있음 (강사 주소)</li>
+    <li>이 칸만 본인 메일로 교체</li>
+  </ul>
+  <aside class="analogy-box">📨 Gmail = 우체부</aside>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/46_gmail_node_panel_clean.png" alt="손보기 2 열기 — Gmail 블록 To 칸 — 46_gmail_node_panel_clean.png">
+    <figcaption class="figcaption-override">Gmail 블록 패널 — To / Subject / Message 필드가 보이는 편집 창</figcaption>
+  </figure>
+  <aside class="callout">본인 메일로</aside>
+  <aside class="notes">손보기 2 열기. 뉴스레터_발송 블록을 더블클릭하시고 To(받는 사람) 칸을 봐 주세요. 지금 예시로 강사 메일이 들어가 있는데, 이걸 사장님 본인이 받으실 Gmail 주소로 바꿔 주시면 됩니다.</aside>
+</section>
+
+<section data-slide="48" data-block="H">
+  <div class="slide-meta"><span class="chip">48</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>타이핑 오타 주의 (@ 확인)</h2>
+  <p class="explanation">@ 빠짐·공백 하나가 메일 실패 원인이 됩니다.</p>
+  <ul>
+    <li>Cmd+A(전체 선택) → Delete(지움) → 본인 메일 · Windows: Ctrl+A → Delete</li>
+    <li>@ 빠짐·공백 체크</li>
+    <li>하단 빨간 경고 없으면 OK</li>
+    <li>자동 저장 인디케이터 확인</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="타이핑 오타 주의 (@ 확인) — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">@ 확인</aside>
+  <aside class="notes">타이핑하실 때 @ 위치 · .com 마지막 점 · 오타 한 글자라도 있으면 메일이 안 가요. 천천히 한 글자씩 확인해 주세요. 헷갈리면 다른 곳에 써 보고 복사·붙여넣기 하시면 제일 안전합니다.</aside>
+</section>
+
+<section data-slide="49" data-block="H">
+  <div class="slide-meta"><span class="chip">49</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>손보기 3 준비 — 본인 구글 시트 만들기</h2>
+  <p class="explanation">사장님 본인 시트에 자동으로 기록되도록 준비.</p>
+  <ul>
+    <li>구글 드라이브 → 새 시트</li>
+    <li>시트 이름 자유롭게</li>
+    <li>A1~D1 헤더 4칸 정확히</li>
+    <li>제목·주관기관·접수마감·상세링크</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/49_sheet_headers_with_url_clean.png" alt="손보기 3 준비 — 본인 구글 시트 만들기 — 49_sheet_headers_with_url_clean.png">
+  </figure>
+  <aside class="callout">첫 행 헤더 필수</aside>
+  <aside class="notes">손보기 3 준비. 사장님 개인 Google Sheets 하나를 새로 만들어 주세요. Google Drive → 새로 만들기 → Google 스프레드시트 → 이름은 &#x27;정부지원금_알림&#x27; 같이 적으시면 됩니다. 시트 1행에 제목·주관기관·접수마감·상세링크 네 칸 헤더를 입력해 주세요.</aside>
+</section>
+
+<section data-slide="50" data-block="H">
+  <div class="slide-meta"><span class="chip">50</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>시트 ID 복사 — 주소창에서</h2>
+  <p class="explanation">시트 주소 중 /d/ 뒤 긴 문자열이 시트 ID. 요령: 주소창 한 번 클릭 → 전체 파랗게 선택됨 → Cmd+C(Windows: Ctrl+C) → n8n에 붙여넣고 By URL 모드에서는 그대로 사용 가능 (자동 인식). By ID 모드에서는 /d/docs.google.com... 앞뒤 잘라내기.</p>
+  <ul>
+    <li>주소 = /d/ID부분/edit</li>
+    <li>/d/ 와 /edit 사이만 드래그</li>
+    <li>Cmd+C(복사) · Windows: Ctrl+C</li>
+    <li>메모장에 일단 저장</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/50_sheet_url_bar_with_id_clean.png" alt="시트 ID 복사 — 주소창에서 — 50_sheet_url_bar_with_id_clean.png">
+  </figure>
+  <aside class="callout">/d/ ~ /edit 사이</aside>
+  <aside class="notes">방금 만든 시트의 주소(URL)에서 &#x27;/d/&#x27; 와 &#x27;/edit&#x27; 사이에 있는 긴 문자열이 시트 ID입니다. 그 부분만 블록 처리해서 복사해 주세요. 주소 전체가 아니라 ID 부분만입니다.</aside>
+</section>
+
+<section data-slide="51" data-block="H">
+  <div class="slide-meta"><span class="chip">51</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>손보기 3 — 시트_기록 Document 칸</h2>
+  <p class="explanation">사장님 본인 시트 ID로 교체하면 제목이 바로 보입니다.</p>
+  <ul>
+    <li>시트_기록 블록 더블클릭</li>
+    <li>Document(문서) → By ID(ID로 지정) 모드</li>
+    <li>칸 선택 → Cmd+A(전체 선택) → Cmd+V(붙여넣기) · Windows: Ctrl+A → Ctrl+V</li>
+    <li>시트 제목 자동 인식 확인</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/51_sheets_document_picker_field_clean.png" alt="손보기 3 — 시트_기록 Document 칸 — 51_sheets_document_picker_field_clean.png">
+  </figure>
+  <aside class="callout">제목 자동 인식</aside>
+  <aside class="notes">손보기 3 실행. 시트_기록 블록을 더블클릭하시고 Document 칸을 보세요. 지금 값이 있으면 지우시고, 방금 복사한 사장님 시트 ID 를 붙여넣으시면 됩니다.</aside>
+</section>
+
+<section data-slide="52" data-block="H">
+  <div class="slide-meta"><span class="chip">52</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>Sheet(시트) 드롭다운 = 시트1 유지</h2>
+  <p class="explanation">헤더 이름이 일치하면 n8n이 알아서 칸을 맞춰줍니다.</p>
+  <ul>
+    <li>Sheet(시트) 드롭다운 열기</li>
+    <li>기본 시트1 유지</li>
+    <li>매핑 = Map Automatically(자동 매핑)</li>
+    <li>헤더 4칸 이름으로 자동 매칭</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/52_sheet_dropdown_value_clean.png" alt="Sheet(시트) 드롭다운 = 시트1 유지 — 52_sheet_dropdown_value_clean.png">
+  </figure>
+  <aside class="callout">Map Automatically(자동 매핑)</aside>
+  <aside class="notes">Document 아래에 Sheet(시트) 드롭다운이 있어요. 여기는 &#x27;시트1&#x27; 기본값을 그대로 두시면 됩니다. 수정할 필요 없습니다.</aside>
+</section>
+
+<section data-slide="53" data-block="H">
+  <div class="slide-meta"><span class="chip">53</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>한 번 실행 — Execute workflow(워크플로우 실행)</h2>
+  <p class="explanation">전체 흐름을 한 번만 돌려 결과를 확인.</p>
+  <ul>
+    <li>캔버스 하단 큰 버튼</li>
+    <li>Execute workflow(워크플로우 실행) 클릭</li>
+    <li>9블록 순차 초록 ✓</li>
+    <li>0/50 → 1/50 카운터 증가</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/53_execute_workflow_button_clean.png" alt="한 번 실행 — Execute workflow(워크플로우 실행) — 53_execute_workflow_button_clean.png">
+  </figure>
+  <aside class="callout">버튼 한 번만</aside>
+  <aside class="notes">자 이제 한 번 실행해 볼게요. 캔버스 하단의 Execute workflow(워크플로우 실행) 버튼 한 번 눌러 주세요. 오늘 처음으로 9블록 전체가 한꺼번에 움직이는 순간입니다.</aside>
+</section>
+
+<section data-slide="54" data-block="H">
+  <div class="slide-meta"><span class="chip">54</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>실행 중 화면 — 순차 초록 ✓</h2>
+  <p class="explanation">블록 하나씩 초록 ✓이 차오르는 게 정상 흐름입니다.</p>
+  <ul>
+    <li>Schedule → HTTP → Code</li>
+    <li>→ Gemini → IF → Set</li>
+    <li>→ Sheets → Gmail</li>
+    <li>순차적으로 초록 체크 표시</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/18_canvas_all_9_nodes_green_executed.png" alt="실행 중 화면 — 순차 초록 ✓ — 18_canvas_all_9_nodes_green_executed.png">
+    <figcaption class="figcaption-override">9블록 전체가 초록 ✓ 로 차오른 실행 완료 화면</figcaption>
+  </figure>
+  <aside class="callout">순차 진행</aside>
+  <aside class="notes">블록이 왼쪽부터 차례대로 초록 체크 ✓ 로 바뀌어 가는 걸 한 번 쭉 보세요. Schedule Trigger → HTTP → Code → Gemini → IF → Set → Sheets → Gmail 순서로 불이 켜집니다.</aside>
+</section>
+
+<section data-slide="55" data-block="H" data-slide-type="reassure">
+  <div class="slide-meta"><span class="chip">55</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>[안심] 1/50만 썼어요</h2>
+  <ul>
+    <li>한 번 실행 = 1/50 소진 (월 기준)</li>
+    <li>체험 기간 내 49회 여유 남음</li>
+    <li>주 1회 자동 실행이면 한도 거의 안 들어요</li>
+    <li>돈 걱정 없음</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="[안심] 1/50만 썼어요 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">49회 남음</aside>
+  <aside class="notes">여기서 잠깐 안심 — 방금 한 번 실행이 이번 달 50회 중 딱 1회만 썼어요. 아직 49회가 남아 있고, 신용카드는 없으니 과금 걱정도 없습니다. 주 1회 자동 실행이면 한 달에 4회 정도만 돌아가서 한도가 거의 안 줄어요.</aside>
+</section>
+
+<section data-slide="56" data-block="H">
+  <div class="slide-meta"><span class="chip">56</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>결과 확인 1 — 구글 시트 2행</h2>
+  <ul>
+    <li>시트 탭 새로고침</li>
+    <li>2행에 4칸 채움</li>
+    <li>한글 제목 · URL 확인</li>
+    <li>접수마감 날짜 확인</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/19_google_sheet_real_rows_clean.png" alt="결과 확인 1 — 구글 시트 2행 — 19_google_sheet_real_rows_clean.png">
+    <figcaption class="figcaption-override">구글 시트 — 1행 헤더 + 2행 새 공고 자동 기록된 실제 캡처</figcaption>
+  </figure>
+  <aside class="callout">시트 2행 보임</aside>
+  <aside class="notes">사장님의 Google 시트 탭으로 돌아가서 한 번 새로고침(F5) 눌러 보세요. 2행에 제목·주관기관·접수마감·상세링크 네 칸이 자동으로 채워져 있으면 성공입니다.</aside>
+</section>
+
+<section data-slide="57" data-block="H">
+  <div class="slide-meta"><span class="chip">57</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>결과 확인 2 — 받은편지함 메일 1통</h2>
+  <p class="explanation">메일 1통 도착이 전체 흐름 성공 증거.</p>
+  <ul>
+    <li>Gmail 탭 새로고침</li>
+    <li>&quot;이번 주 ... 공고&quot; 제목</li>
+    <li>본문 4bullet 한글·URL</li>
+    <li>링크 클릭 = K-Startup 열림</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/07_final_results/02_newsletter_email_preview_clean.png" alt="결과 확인 2 — 받은편지함 메일 1통 — 02_newsletter_email_preview_clean.png">
+    <figcaption class="figcaption-override">Gmail 받은편지함 — 자동 발송된 뉴스레터 메일 본문</figcaption>
+  </figure>
+  <aside class="callout">메일 도착!</aside>
+  <aside class="notes">사장님의 Gmail 받은편지함 탭도 열어 보세요. &#x27;이번 주 맞춤 정부지원금 공고&#x27; 같은 제목의 메일이 한 통 도착해 있어야 해요. 본문에 시트와 같은 정보가 들어가 있고, 상세 링크를 누르면 K-Startup 공고 페이지가 열립니다.</aside>
+</section>
+
+<section data-slide="58" data-block="H" data-slide-type="checkpoint">
+  <div class="slide-meta"><span class="chip">58</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>[체크포인트] 시트 + 메일 둘 다</h2>
+  <ul>
+    <li>시트 4칸 한글·URL ✓</li>
+    <li>메일 4bullet 한글·URL ✓</li>
+    <li>카운터 1/50 ✓</li>
+    <li>Schedule Trigger 재확인 = Weeks · Mon · 9시 (다음 슬라이드 활성화 전 확인)</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/04_sheets_gmail/19_google_sheet_real_rows_clean.png" alt="[체크포인트] 시트 + 메일 둘 다 — 19_google_sheet_real_rows_clean.png">
+    <figcaption class="figcaption-override">왼쪽 구글 시트 2행 + 오른쪽 받은편지함 메일 — 두 증거가 동시에 보이면 완성</figcaption>
+  </figure>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/07_final_results/02_newsletter_email_preview_clean.png" alt="[체크포인트] 시트 + 메일 둘 다 — 02_newsletter_email_preview_clean.png">
+    <figcaption class="figcaption-override">왼쪽 구글 시트 2행 + 오른쪽 받은편지함 메일 — 두 증거가 동시에 보이면 완성</figcaption>
+  </figure>
+  <aside class="callout">diptych = 완성</aside>
+  <aside class="notes">체크포인트. 지금 사장님 화면에 (1) 시트 2행 채워짐, (2) Gmail 받은편지함에 메일 1통, 두 가지가 다 보이시면 오늘 수업의 핵심은 완성된 거예요. 축하드립니다.</aside>
+</section>
+
+<section data-slide="59" data-block="H">
+  <div class="slide-meta"><span class="chip">59</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>Publish 버튼 누르기 — 매주 자동 완성</h2>
+  <p class="explanation">매주 월요일 9시 자동 실행 스위치 ON. (커리큘럼 &#x27;활성화 토글&#x27; = 현재 Cloud의 &#x27;Publish 버튼&#x27;)</p>
+  <ul>
+    <li>사전 체크: Schedule Trigger Weeks·Mon·9시</li>
+    <li>우상단 Publish(게시) 버튼 클릭</li>
+    <li>클릭 후 버튼이 Published 상태로 전환</li>
+    <li>이후 Schedule Trigger 패널에서 다음 실행 Mon 09:00 확인</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/06_activation/59_publish_button_published_state_clean.png" alt="Publish 버튼 누르기 — 매주 자동 완성 — 59_publish_button_published_state_clean.png">
+    <figcaption class="figcaption-override">우측 상단 Publish 버튼 — 눌러 Published 상태로 전환된 모습</figcaption>
+  </figure>
+  <aside class="callout">매주 월 9시 자동 · Publish</aside>
+  <aside class="notes">마지막 한 단계만 남았어요. 캔버스 우측 상단 Publish(게시) 버튼을 한 번 누르시면 매주 월요일 오전 9시 자동 실행이 시작됩니다. 커리큘럼에 &#x27;활성화 토글&#x27;이라고 적혀 있는 것과 같은 기능이에요.</aside>
+</section>
+
+<section data-slide="60" data-block="H" data-slide-type="checkpoint">
+  <div class="slide-meta"><span class="chip">60</span><span class="block-tag">블록 H · 실습 3 · 시트·메일</span></div>
+  <h2>[체크포인트] Workflow published 확인</h2>
+  <p class="explanation">커리큘럼 &#x27;활성화 토글&#x27; = 현재 Cloud의 &#x27;Publish 버튼&#x27; (동일 기능). 토스트 문구는 Cloud 버전에 따라 변할 수 있습니다.</p>
+  <ul>
+    <li>Publish 클릭 → 버전 이름 자동 입력</li>
+    <li>Describe changes (선택) = 비워두기</li>
+    <li>파란 Publish 버튼 → 확정</li>
+    <li>&#x27;Workflow published&#x27; 알림 확인</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/06_activation/60_published_state_clean.png" alt="[체크포인트] Workflow published 확인 — 60_published_state_clean.png">
+    <figcaption class="figcaption-override">Publish 직후 화면 하단 토스트 — &quot;Workflow published&quot;</figcaption>
+  </figure>
+  <aside class="callout">Publish 완료</aside>
+  <aside class="notes">Publish 를 누르고 나면 &#x27;Workflow published&#x27;라는 안내 토스트가 떠요. &#x27;이제 스케줄 트리거에 따라 자동 실행이 시작됩니다&#x27;라는 메시지입니다. 다음 실행 시각은 Schedule Trigger 노드 패널에서 확인하실 수 있어요. 수업 후에 끄고 싶으시면 같은 버튼으로 Unpublish 하시면 됩니다.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK I — 정리와 유지보수 (3:35–3:55, 20분)
+     slides: 61 62 63 64 65 66 67 68 69 70  (10 slides)
+     ===================================================================== -->
+
+<section data-slide="61" data-block="I" class="slide-recap-card">
+  <div class="slide-meta"><span class="chip">61</span><span class="block-tag">블록 I · 정리</span></div>
+  <div class="recap-body">
+    <h2 class="recap-title">9블록 전체 흐름 — 한 장 요약</h2>
+    <p class="explanation recap-explanation">오늘 만든 자동화 흐름을 한 장으로 되돌아보기.</p>
+    <div class="recap-grid">
+      <div class="recap-card"><span class="recap-card-num">01</span><span class="recap-card-text">Schedule → HTTP → Code → Gemini (+보조) → IF</span></div>
+      <div class="recap-card"><span class="recap-card-num">02</span><span class="recap-card-text">→ Set → Sheets → Gmail (= 8 + 1 보조)</span></div>
+      <div class="recap-card"><span class="recap-card-num">03</span><span class="recap-card-text">블록 = 각자 한 가지 일만 함</span></div>
+      <div class="recap-card"><span class="recap-card-num">04</span><span class="recap-card-text">이 패턴 = 다른 자동화에도 그대로</span></div>
+    </div>
+    <aside class="analogy-box recap-analogy">🍳 알람 → 배달원 → 정리 직원 → 매니저 → 갈림길 → 포장 → 장부 → 우체부</aside>
+    <aside class="callout recap-callout">9 블록 한 장</aside>
+  </div>
+  <aside class="notes">지금까지 한 걸 9블록 한 장으로 다시 한번 보여드립니다. Trigger → API → Parse → AI → IF → Set → Sheets → Gmail. 오늘 사장님이 직접 이 흐름을 조립하신 거예요.</aside>
+</section>
+
+<section data-slide="62" data-block="I" class="slide-recap-card">
+  <div class="slide-meta"><span class="chip">62</span><span class="block-tag">블록 I · 정리</span></div>
+  <div class="recap-body">
+    <h2 class="recap-title">월 1회 점검 — 3가지만 보세요</h2>
+    <p class="explanation recap-explanation"> 참고: Gemini API 무료 티어(매일 약 1,500회)가 충분히 크므로 이 워크플로우는 거의 무료. 유료 전환 희망 시 Google AI Studio 대시보드에서 예산 설정 가능.</p>
+    <div class="recap-grid">
+      <div class="recap-card"><span class="recap-card-num">01</span><span class="recap-card-text">1) 0/50 카운터 숫자 확인 (한도 여유)</span></div>
+      <div class="recap-card"><span class="recap-card-num">02</span><span class="recap-card-text">2) 빨간 ⚠ 배지 없는지 Executions(실행 이력)</span></div>
+      <div class="recap-card"><span class="recap-card-num">03</span><span class="recap-card-text">3) Gemini API 키 만료일 체크 (구글 AI Studio)</span></div>
+      <div class="recap-card"><span class="recap-card-num">04</span><span class="recap-card-text">5분이면 충분 · 캘린더 알림 추천</span></div>
+    </div>
+    <aside class="analogy-box recap-analogy">🔧 월 1회 점검 = 가게 냉장고 청소 루틴</aside>
+    <aside class="callout recap-callout">월 1회 5분</aside>
+  </div>
+  <aside class="notes">매달 한 번만 1분 동안 점검하시면 1년 내내 동작합니다. (1) Executions 탭에 실행 기록이 있는지, (2) 최근 실행이 초록 ✓ 인지, (3) 본인 받은편지함에 지난주 메일이 와 있는지 — 이 세 가지만 보시면 돼요.</aside>
+</section>
+
+<section data-slide="63" data-block="I" class="slide-recap-card">
+  <div class="slide-meta"><span class="chip">63</span><span class="block-tag">블록 I · 정리</span></div>
+  <div class="recap-body">
+    <h2 class="recap-title">자주 만나는 오류 Top-5 — 이것만 알면 90% 해결</h2>
+    <p class="explanation recap-explanation">이 다섯 가지만 외우시면 수업 후 마주치는 오류의 90%는 자가 복구 가능합니다.</p>
+    <div class="recap-grid">
+      <div class="recap-card"><span class="recap-card-num">01</span><span class="recap-card-text">1) HTTP 404 — URL 오타 (주소창 확인)</span></div>
+      <div class="recap-card"><span class="recap-card-num">02</span><span class="recap-card-text">2) Code Node 스마트따옴표 &quot; &quot; → ASCII &quot;&quot; 교체</span></div>
+      <div class="recap-card"><span class="recap-card-num">03</span><span class="recap-card-text">3) Gemini 429 — 하루 한도 초과 (17:00 이후 회복 또는 flash-lite 교체)</span></div>
+      <div class="recap-card"><span class="recap-card-num">04</span><span class="recap-card-text">4) OAuth 열쇠 만료 — 좌측 Credentials(자격증명) → Reconnect(다시 연결) 한 번</span></div>
+      <div class="recap-card"><span class="recap-card-num">05</span><span class="recap-card-text">5) 시트 헤더 불일치 — A1~D1 4칸(제목·주관기관·접수마감·상세링크) 확인</span></div>
+    </div>
+    <aside class="analogy-box recap-analogy">🔧 디버그 = 다섯 가지 단골 오류 체크리스트</aside>
+    <aside class="callout recap-callout">5가지만 외우기</aside>
+  </div>
+  <aside class="notes">자주 만나는 오류 Top 5. (1) 스마트따옴표 문제 → 일반 따옴표로 교체, (2) 노드 이름 오타 → `$(&#x27;노드이름&#x27;)` 복사, (3) Gemini 429 한도 → 다음 날 자동 회복 또는 flash-lite 교체, (4) OAuth 만료 → Reconnect 한 번, (5) 시트 헤더 누락 → 1행에 4칸 헤더 추가. 90%는 이 다섯 개입니다.</aside>
+</section>
+
+<section data-slide="64" data-block="I" class="slide-recap-card">
+  <div class="slide-meta"><span class="chip">64</span><span class="block-tag">블록 I · 정리</span></div>
+  <div class="recap-body">
+    <h2 class="recap-title">열쇠(Credential) 만료 시 = Reconnect(다시 연결) 한 번</h2>
+    <p class="explanation recap-explanation">열쇠 만료 시 같은 방법으로 다시 복사.</p>
+    <div class="recap-grid">
+      <div class="recap-card"><span class="recap-card-num">01</span><span class="recap-card-text">좌측 Credentials(자격증명) 메뉴</span></div>
+      <div class="recap-card"><span class="recap-card-num">02</span><span class="recap-card-text">해당 항목 클릭 → Reconnect(다시 연결) 버튼</span></div>
+      <div class="recap-card"><span class="recap-card-num">03</span><span class="recap-card-text">Sign in with Google(구글로 로그인) 재실행</span></div>
+      <div class="recap-card"><span class="recap-card-num">04</span><span class="recap-card-text">90일마다 1번 정도 발생 (Gmail/Sheets OAuth)</span></div>
+    </div>
+    <aside class="callout recap-callout">만료 = Reconnect</aside>
+  </div>
+  <aside class="notes">OAuth 토큰은 보통 6개월~1년 정도 유효한데, 만료되면 빨간 점이 다시 뜹니다. 당황하지 마시고 해당 블록 Credential 메뉴 → Reconnect(다시 연결) 버튼 한 번 누르시면 됩니다. 같은 Google 계정으로 다시 로그인만 하시면 끝이에요.</aside>
+</section>
+
+<section data-slide="65" data-block="I" class="slide-recap-card">
+  <div class="slide-meta"><span class="chip">65</span><span class="block-tag">블록 I · 정리</span></div>
+  <div class="recap-body">
+    <h2 class="recap-title">Trial 만료 후 — 계속 쓸지 결정</h2>
+    <div class="recap-grid">
+      <div class="recap-card"><span class="recap-card-num">01</span><span class="recap-card-text">체험 만료 후 자동 정지 (자동 결제 없음)</span></div>
+      <div class="recap-card"><span class="recap-card-num">02</span><span class="recap-card-text">체험 기간은 계정마다 최소 14일 ~ 최대 180일, 대시보드에 남은 일수 표시</span></div>
+      <div class="recap-card"><span class="recap-card-num">03</span><span class="recap-card-text">계속 쓰시면 Settings → Plan &amp; billing(요금제) → Starter $20/월</span></div>
+      <div class="recap-card"><span class="recap-card-num">04</span><span class="recap-card-text">수료 시 수강 혜택: 2개 도구 × 3개월 = 최대 20만원 상당 (#68 참고)</span></div>
+    </div>
+    <aside class="analogy-box recap-analogy">🔁 Trial 만료 = 체험판 종료, 서비스 끊김 없음</aside>
+    <aside class="callout recap-callout">자동 결제 없음</aside>
+  </div>
+  <aside class="notes">체험 기간이 끝나면 자동으로 멈추고, 자동 결제는 절대 없습니다. 체험은 계정마다 달라서 최소 14일 ~ 최대 180일 사이인데, 대시보드 카드에 &#x27;남은 일수&#x27;가 표시돼요. 계속 쓰시려면 n8n Cloud Starter $20/월 이고, 수료 하시면 저희가 드리는 혜택으로 3개월 동안 최대 20만원 상당 도구를 지원 받으실 수 있어요.</aside>
+</section>
+
+<section data-slide="66" data-block="I">
+  <div class="slide-meta"><span class="chip">66</span><span class="block-tag">블록 I · 정리</span></div>
+  <h2>오늘 패턴 = 5가지 응용 아이디어</h2>
+  <ul>
+    <li>치킨집: 배민 별점 4↓ 리뷰 자동 알림 + 주간 요약</li>
+    <li>한식당: 날씨 예보 → 배달 비수기 예측 카톡</li>
+    <li>카페: 인스타 팔로워 수 변화 주 1회 시트 기록</li>
+    <li>김밥집: 대량 주문 문의 메일 자동 분류 → 우선 답장</li>
+  </ul>
+  <aside class="analogy-box">🧩 레고 블록 재조립</aside>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="오늘 패턴 = 5가지 응용 아이디어 — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">블록만 교체</aside>
+  <aside class="notes">오늘 배운 패턴은 정부지원금뿐만 아니라 여러 데 응용 가능해요. 신상 경쟁사 메뉴 알림, 네이버 블로그 검색 자동 보고서, 경쟁점 리뷰 모니터링, 날씨 기반 재고 경보, 주간 매출 요약 메일 — 같은 9블록 구조에 API만 바꾸시면 됩니다.</aside>
+</section>
+
+<section data-slide="67" data-block="I">
+  <div class="slide-meta"><span class="chip">67</span><span class="block-tag">블록 I · 정리</span></div>
+  <h2>사장님이 절약한 시간 (연 26시간)</h2>
+  <p class="explanation">매주 30분 × 52주 = 연간 26시간을 다시 손에.</p>
+  <ul>
+    <li>주당 30분 공고 검색 절약</li>
+    <li>연간 26시간 = 3영업일</li>
+    <li>AI 판단 = 숨은 추가 이득</li>
+    <li>휴무일 복귀가 이 자동화</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/07_final_results/02_newsletter_email_preview_clean.png" alt="사장님이 절약한 시간 (연 26시간) — 02_newsletter_email_preview_clean.png">
+  </figure>
+  <aside class="callout">연 26시간 환원</aside>
+  <aside class="notes">사장님이 매주 직접 공고 검색하셨을 때를 생각해 볼게요. 주 30분 × 52주 = 연 26시간. 이 시간을 영업이나 가족 시간에 돌려 쓰실 수 있습니다. 4시간 투자의 결과예요.</aside>
+</section>
+
+<section data-slide="68" data-block="I" class="slide-benefit">
+  <div class="slide-meta"><span class="chip">68</span><span class="block-tag">블록 I · 정리</span></div>
+  <div class="benefit-body">
+    <h2 class="benefit-title">수강 혜택 — 최대 20만원 상당 구독 지원</h2>
+    <div class="benefit-tools">
+      <div class="benefit-tool"><span class="benefit-tool-name">n8n Cloud</span><span class="benefit-tool-sub">자동화 플랫폼</span><span class="benefit-tool-price">$20/월</span></div>
+      <div class="benefit-tool"><span class="benefit-tool-name">Gemini</span><span class="benefit-tool-sub">Google AI</span><span class="benefit-tool-price">$20/월</span></div>
+      <div class="benefit-tool"><span class="benefit-tool-name">CapCut Pro</span><span class="benefit-tool-sub">영상 편집</span><span class="benefit-tool-price">$19.99/월</span></div>
+      <div class="benefit-tool"><span class="benefit-tool-name">Kling AI</span><span class="benefit-tool-sub">영상 생성</span><span class="benefit-tool-price">$6.99~/월</span></div>
+    </div>
+    <div class="benefit-formula">2개 도구 × 3개월 = 최대 <strong>20만원</strong> 상당</div>
+    <ul class="benefit-notes">
+      <li>2개 도구 × 3개월 = 최대 20만원 상당 구독 지원</li>
+      <li>대상 도구: Google Gemini · n8n Cloud · CapCut Pro · Kling AI (4개 중 2개 선택)</li>
+      <li>사장님이 직접 결제 → 영수증 제출 → 뤼튼 정산</li>
+      <li>수료 확정 후 안내 (수료 = 과정 1 + 선택 과정 1개 + 사후 컨설팅 2회)</li>
+    </ul>
+    <aside class="callout benefit-callout">2개 × 3개월 · 최대 20만원</aside>
+  </div>
+  <aside class="notes">오늘 과정을 수료하시면 최대 20만원 상당의 구독 지원을 받으실 수 있어요. n8n Cloud·Gemini·CapCut·Kling 네 개 도구 중 두 개를 3개월 동안 저희가 결제해 드립니다. 환율·플랜 선택에 따라 16~22만원 범위로 움직여요.</aside>
+</section>
+
+<section data-slide="69" data-block="I" data-slide-type="checkpoint">
+  <div class="slide-meta"><span class="chip">69</span><span class="block-tag">블록 I · 정리</span></div>
+  <h2>[체크포인트 완료] 오늘 만든 것 — 한 줄 정리</h2>
+  <ul>
+    <li>가져오기 ✓ 손보기 ✓</li>
+    <li>한 번 실행 ✓</li>
+    <li>3필드 customize ✓</li>
+    <li>Publish 버튼 (=커리큘럼 &#x27;활성화 토글&#x27;) ✓</li>
+    <li>매주 월요일 자동 실행 ✓</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/06_activation/60_published_state_clean.png" alt="[체크포인트 완료] 오늘 만든 것 — 한 줄 정리 — 60_published_state_clean.png">
+    <figcaption class="figcaption-override">Published 상태의 워크플로우 — 5단계 체크포인트 모두 완료</figcaption>
+  </figure>
+  <aside class="callout">5단계 모두 완료</aside>
+  <aside class="notes">오늘 사장님이 해내신 걸 한 줄로 정리하면 — 워크플로우 가져오기 ✓ · 3칸 손보기 ✓ · 한 번 실행 ✓ · Publish 버튼 눌러서 매주 자동 실행 ✓. 5단계 전부 체크입니다. 박수 한 번 쳐 드릴게요.</aside>
+</section>
+
+<section data-slide="70" data-block="I">
+  <div class="slide-meta"><span class="chip">70</span><span class="block-tag">블록 I · 정리</span></div>
+  <h2>더 배우려면 (course2_kit 참고)</h2>
+  <ul>
+    <li>n8n 공식 커뮤니티</li>
+    <li>유튜브 &quot;n8n 한국어&quot; 채널</li>
+    <li>자료집 PDF 읽을거리 5개</li>
+    <li>월 1회 사장님 사례 공유회</li>
+  </ul>
+  <figure>
+    <img src="./assets/placeholder_text_only.png" alt="더 배우려면 (course2_kit 참고) — placeholder_text_only.png">
+  </figure>
+  <aside class="callout">course2_kit 참고</aside>
+  <aside class="notes">더 배우고 싶으시면 course2_kit 폴더 안에 troubleshooting·prompts·business_profile 자료가 있어요. 월 1회 사장님 사례 공유회도 운영할 예정이니 답장 주시면 안내 드릴게요.</aside>
+</section>
+
+<!-- =====================================================================
+     BLOCK J — Q&A 및 마감 (3:55–4:00, 5분)
+     slides: 71 72 73  (3 slides)
+     ===================================================================== -->
+
+<section data-slide="71" data-block="J" class="slide-closing">
+  <div class="slide-meta"><span class="chip">71</span><span class="block-tag">블록 J · Q&amp;A·마감</span></div>
+  <div class="closing-body">
+    <div class="closing-icon" aria-hidden="true">💬</div>
+    <h2 class="closing-title">궁금한 점 받습니다 (QR + 카톡)</h2>
+    <ul class="closing-points">
+      <li>손 들어 주세요</li>
+      <li>마이크 돌려드립니다</li>
+      <li>연락처 QR 좌측</li>
+      <li>카톡 오픈채팅방 안내</li>
+    </ul>
+    <div class="closing-qr" aria-label="QR 코드 자리"><span>QR</span><small>연락처 · 카톡</small></div>
+    <aside class="callout closing-callout">QR 스캔</aside>
+  </div>
+  <aside class="notes">마지막으로 질문 받습니다. QR 코드 찍으시면 카톡 오픈채팅방으로 들어가실 수 있어요. 수업 끝나고 집에 가셔서 막히시는 부분 생기면 언제든 올려 주세요. 강사·조교가 함께 봐 드립니다.</aside>
+</section>
+
+<section data-slide="72" data-block="J" class="slide-closing">
+  <div class="slide-meta"><span class="chip">72</span><span class="block-tag">블록 J · Q&amp;A·마감</span></div>
+  <div class="closing-body">
+    <div class="closing-icon" aria-hidden="true">❓</div>
+    <h2 class="closing-title">흔한 질문 미리 정리 (FAQ)</h2>
+    <ul class="closing-points">
+      <li>Q. 컴퓨터 꺼도 돼요? → 네</li>
+      <li>Q. 무료로 계속? → 체험 만료(최소 14일~) 후 유료 또는 수료 시 수강 혜택으로 3개월 지원</li>
+      <li>Q. 오류 나면? → Executions(실행 이력)</li>
+      <li>Q. 다른 공고? → 블록 교체</li>
+    </ul>
+    <aside class="callout closing-callout">FAQ</aside>
+  </div>
+  <aside class="notes">자주 오는 질문 네 개 미리 정리해 드릴게요. 컴퓨터 꺼도 되는지 — 네. 무료로 계속 쓸 수 있는지 — 체험 만료 후 유료 전환 또는 수강 혜택으로 3개월 지원. 오류 나면 어디 보는지 — Executions 탭. 다른 공고도 되는지 — 블록 URL만 바꾸시면 됩니다.</aside>
+</section>
+
+<section data-slide="73" data-block="J" class="slide-closing">
+  <div class="slide-meta"><span class="chip">73</span><span class="block-tag">블록 J · Q&amp;A·마감</span></div>
+  <div class="closing-body">
+    <div class="closing-icon" aria-hidden="true">🎓</div>
+    <h2 class="closing-title">수료 · 피드백 설문 · 다음 과정 예고</h2>
+    <ul class="closing-points">
+      <li>4시간 완주 · 수료 축하</li>
+      <li>수료 기준: 워크플로우 제출 + 사후 컨설팅 2회 이수 (커리큘럼 §7)</li>
+      <li>QR 1분 피드백 (좋았던 점 / 어려웠던 점 / 다음 주제)</li>
+      <li>다음 과정: AI로 리뷰 대응 — 수료증 + 수강 혜택 안내 이메일 발송</li>
+    </ul>
+    <div class="closing-qr" aria-label="피드백 설문 QR"><span>QR</span><small>피드백 설문</small></div>
+    <aside class="callout closing-callout">고생하셨어요</aside>
+  </div>
+  <aside class="notes">수료 축하드립니다. 잠시 뒤 피드백 설문 QR 보내 드리고, 다음 과정 2-2(영상 블로그 자동화) 예고도 함께 안내드릴게요. 오늘 함께해 주셔서 감사드립니다.</aside>
+</section>
+
+</div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js core + plugins -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    autoAnimate: true,
+    transition: 'slide',
+    width: 1600,
+    height: 1000,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+  });
+</script>
+</body>
+</html>
