@@ -298,7 +298,7 @@
 
 <!-- =====================================================================
      BLOCK D — 실습 1: 정부 공고 API 불러오기 (1:00–1:45, 45분)
-     slides: 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30  (15 slides)
+     slides: 16 17a 17b 17c 18 19 20 21 22 23 24 25 26 27 28 29 30  (17 slides)
      ===================================================================== -->
 
 <section data-slide="16" data-block="D" class="slide-banner">
@@ -314,30 +314,63 @@
       <li>배울 것: API 키 → HTTP Request(자료 받아오기) → Code(파싱)</li>
       <li>결과물: 공고 원본 데이터가 캔버스에 도착</li>
       <li>커리큘럼 블록: 1:00~1:45 (45분)</li>
-      <li>커리큘럼 &#x27;기업마당&#x27; → 오늘은 K-Startup API (#17 참고)</li>
+      <li>기업마당 API 사용</li>
     </ul>
     <aside class="analogy-box banner-analogy">🍳 API = 주방 주문표</aside>
-    <aside class="callout banner-callout">실습 1 시작 (기업마당→K-Startup)</aside>
+    <aside class="callout banner-callout">실습 1 시작</aside>
   </div>
-  <aside class="notes">지금부터 첫 번째 실습 — 정부지원사업 공고를 인터넷에서 불러오는 구간입니다. 45분짜리 블록인데, 끝나고 나면 &#x27;내 가게 들어가는 자동화의 첫 숨&#x27;이 느껴지실 거예요. API라는 단어가 낯설어도 괜찮아요 — 주방 주문표 비유로 풀어 드립니다.</aside>
+  <aside class="notes">지금부터 첫 번째 실습 — 정부지원사업 공고를 인터넷에서 불러오는 구간입니다. 오늘 쓰는 자료 출처는 &#x27;기업마당&#x27;이에요. 소상공인 전용 공고가 가장 많이 올라오는 정부 포털이고, 서울시·자치구 지원금도 여기 다 모여요. 45분짜리 블록이고, 먼저 API 키 한 번 받고(17a~17c), 바로 워크플로우에 연결할 겁니다.</aside>
 </section>
 
-<section data-slide="17" data-block="D">
-  <div class="slide-meta"><span class="chip">17</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
-  <h2>오늘 API = K-Startup · 커리큘럼 &#x27;기업마당&#x27;도 같은 방식</h2>
+<section data-slide="17a" data-block="D">
+  <div class="slide-meta"><span class="chip">17a</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>API 키 받기 (1) — 기업마당 API 페이지 접속</h2>
+  <p class="explanation">기업마당 API 키는 기업마당 자체 포털에서 발급. 무료, 평생 사용.</p>
   <ul>
-    <li>오늘 수업 = K-Startup API (인증 불필요 · 더 안정적)</li>
-    <li>커리큘럼 기준 도구: 기업마당 (정부24 계열)</li>
-    <li>둘 다 공고 자료 제공 — 같은 방식(HTTP Request)으로 연결</li>
-    <li>워크플로우 파일의 URL만 바꾸면 기업마당도 동작</li>
+    <li>bizinfo.go.kr/apiDetail.do?id=bizinfoApi 접속</li>
+    <li>기업마당 자체 가입 (회원가입 1분)</li>
+    <li>&quot;지원사업정보 API&quot; 섹션의 파란색 &quot;사용신청&quot; 버튼</li>
   </ul>
-  <aside class="analogy-box">🏢 API = 두 시청 건물 · 주소만 다름</aside>
   <figure>
-    <img src="./assets/placeholder_text_only.png" alt="오늘 API = K-Startup · 커리큘럼 &#x27;기업마당&#x27;도 같은 방식 — placeholder_text_only.png">
-    <figcaption class="figcaption-override">두 사이트 스크린샷 side-by-side (K-Startup 로고 + 기업마당 로고)</figcaption>
+    <img src="../screenshots/phase_3_cloud/08_bizinfo_apikey/01_bizinfo_api_detail_page.png" alt="API 키 받기 (1) — 기업마당 API 페이지 접속 — 01_bizinfo_api_detail_page.png">
   </figure>
-  <aside class="callout">같은 방식 · 다른 주소</aside>
-  <aside class="notes">오늘 사용할 공고 API는 K-Startup입니다. 커리큘럼에는 &#x27;기업마당&#x27;으로 적혀 있는데, 두 사이트가 같은 공고를 거의 똑같이 싣기 때문에 수업에서는 K-Startup 을 씁니다. API 키 발급 없이 바로 호출 가능해서 시간을 아낄 수 있어요. 워크플로우 파일의 URL만 바꾸면 나중에 기업마당으로도 똑같이 동작합니다.</aside>
+  <aside class="callout">사용신청 버튼</aside>
+  <aside class="notes">이번엔 &#x27;기업마당&#x27;이라는 정부 포털에 바로 들어갑니다. 주소는 bizinfo.go.kr/apiDetail.do?id=bizinfoApi 이에요. 기업마당 회원가입 1분만 하시면 &quot;지원사업정보 API&quot; 섹션에 파란색 &#x27;사용신청&#x27; 버튼이 보입니다. 그 버튼 한 번만 누르시면 됩니다. (약 90초)</aside>
+</section>
+
+<section data-slide="17b" data-block="D">
+  <div class="slide-meta"><span class="chip">17b</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>API 키 받기 (2) — 활용 IP 칸은 형식만 맞으면 OK</h2>
+  <p class="explanation">신청서의 IP 칸은 양식 통과 목적. 실제 접속 IP와 달라도 API 사용에 지장 없음.</p>
+  <ul>
+    <li>신청서 작성 — 사용목적 칸에 &quot;소상공인 정부지원금 알림 자동화&quot;</li>
+    <li>활용 IP 입력 칸 — 본인 IP 입력 또는 `111.111.111.111`</li>
+    <li>형식만 맞으면 등록 가능 (정부 API 신청서 표준 입력 방식)</li>
+    <li>실제 API 호출은 등록된 IP 외 네트워크에서도 정상 동작</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/08_bizinfo_apikey/02_application_form_ip_trick.png" alt="API 키 받기 (2) — 활용 IP 칸은 형식만 맞으면 OK — 02_application_form_ip_trick.png">
+    <figcaption class="figcaption-override">사용신청 화면 — IP 입력 칸 / 형식만 맞으면 통과</figcaption>
+  </figure>
+  <aside class="callout">111.111.111.111 OK</aside>
+  <aside class="notes">신청서에서 사용목적과 활용 IP를 물어봅니다. 사용목적 칸에는 &quot;소상공인 정부지원금 알림 자동화&quot; 라고 적으시면 됩니다. 활용 IP 칸은 본인 IP가 명확하지 않아도 괜찮아요 — `111.111.111.111` 처럼 형식만 맞으면 그대로 등록됩니다. 정부 API 신청서에서 자주 쓰는 표준 입력 방식이고, 실제 API 호출은 등록된 IP 외 네트워크에서도 정상 동작합니다. (약 90초)</aside>
+</section>
+
+<section data-slide="17c" data-block="D">
+  <div class="slide-meta"><span class="chip">17c</span><span class="block-tag">블록 D · 실습 1 · 공고 API</span></div>
+  <h2>API 키 받기 (3) — 받은 키는 URL의 crtfcKey 칸에 끼움</h2>
+  <p class="explanation">받은 짧은 영문+숫자 `crtfcKey` 한 줄이 수업 중 HTTP 블록 URL 에 들어가는 유일한 사장님 정보입니다.</p>
+  <ul>
+    <li>신청 후 보통 즉시 자동 승인 + 이메일로 `crtfcKey` 도착</li>
+    <li>받은 키를 URL의 `crtfcKey=` 다음에 붙여넣음</li>
+    <li>이 키를 수업 중 n8n HTTP 블록의 URL 칸에 붙여넣습니다 (실습 1에서)</li>
+  </ul>
+  <figure>
+    <img src="../screenshots/phase_3_cloud/08_bizinfo_apikey/03_api_parameter_table.png" alt="API 키 받기 (3) — 받은 키는 URL의 crtfcKey 칸에 끼움 — 03_api_parameter_table.png">
+    <figcaption class="figcaption-override">기업마당 API 파라미터 명세 — crtfcKey(인증키), dataType(json), searchCnt(건수), 해시태그(hashtags, 분야/지역 필터)</figcaption>
+  </figure>
+  <aside class="callout">URL의 crtfcKey 칸</aside>
+  <aside class="notes">신청 누르시면 보통 즉시 자동 승인이 뜹니다. 마이페이지 인증키 발급 현황에서 `crtfcKey` 라는 짧은 영문+숫자 문자열 하나를 복사해 메모장에 저장해 두세요. 이 키를 수업 중 n8n HTTP 블록의 URL 칸 `crtfcKey=` 다음에 그대로 붙여넣습니다. 여기까지 5분, 다음 슬라이드부터 본격 실습입니다. (약 90초)</aside>
 </section>
 
 <section data-slide="18" data-block="D">
@@ -432,7 +465,7 @@
   <h2>블록 2: 정부공고_API_호출 (HTTP)</h2>
   <p class="explanation">주방에 주문표 한 장 넣으면 요리 한 상이 나오듯, 정해진 주소에 &quot;자료 주세요&quot; 한 번 묻고 가져옵니다.</p>
   <ul>
-    <li>역할: K-Startup에 자료 요청</li>
+    <li>역할: 기업마당에 자료 요청 (소상공인 공고만)</li>
     <li>API = 주방 주문표 — 주문 한 장 → 자료 한 상자</li>
     <li>URL · Method · Response Format 설정</li>
     <li>Method(메서드)=GET · Format(응답 형식)=Text 고정</li>
@@ -442,7 +475,7 @@
     <img src="../screenshots/phase_3_cloud/05_workflow_build/11_node2_http_request_panel_clean.png" alt="블록 2: 정부공고_API_호출 (HTTP) — 11_node2_http_request_panel_clean.png">
   </figure>
   <aside class="callout">URL 이미 입력됨</aside>
-  <aside class="notes">두 번째 블록은 정부공고_API_호출. 인터넷에서 공고 데이터를 받아오는 블록이에요. URL·Method·Response Format 세 칸이 미리 채워져 있고, 사장님이 수정할 건 하나도 없습니다. &#x27;실행해 보기&#x27; 버튼만 눌러 보시면 JSON이 쏟아져 나옵니다.</aside>
+  <aside class="notes">두 번째 블록은 정부공고_API_호출. 기업마당 서버에 &quot;소상공인 공고 주세요&quot;라고 요청을 보내는 블록이에요. URL 끝에 `hashtags=소상공인` 파라미터가 붙어 있어서 자동으로 필터링됩니다. 방금 받으신 API 키(crtfcKey)도 이 블록의 Query 파라미터에 연결돼 있어요. &#x27;실행해 보기&#x27; 누르시면 JSON이 20건씩 쏟아져 나옵니다.</aside>
 </section>
 
 <section data-slide="24" data-block="D">
@@ -450,9 +483,9 @@
   <h2>블록 3: 공고_파싱 (Code)</h2>
   <p class="explanation">뭉쳐 온 자료에서 필요한 칸만 뽑는 정리 직원.</p>
   <ul>
-    <li>역할: 덩어리를 8칸 정리</li>
-    <li>JavaScript 20줄 이미 작성됨</li>
-    <li>제목·주관기관·접수마감 추출</li>
+    <li>역할: 덩어리를 6칸 정리</li>
+    <li>HTML 요약 태그 제거 + 6칸 정리</li>
+    <li>제목·주관기관·접수마감·상세링크 추출</li>
     <li>코드 읽기 부담 없음</li>
   </ul>
   <aside class="analogy-box">🧾 Code = 영수증 정리 직원</aside>
@@ -460,7 +493,7 @@
     <img src="../screenshots/phase_3_cloud/05_workflow_build/12_node3_code_parsing_panel_clean.png" alt="블록 3: 공고_파싱 (Code) — 12_node3_code_parsing_panel_clean.png">
   </figure>
   <aside class="callout">읽기만 하세요</aside>
-  <aside class="notes">세 번째 블록은 공고_파싱. 방금 받은 XML 덩어리에서 제목·주관기관·접수마감·상세링크 네 조각만 골라내는 JavaScript 20줄이 이미 써 있어요. 사장님이 코드를 읽으실 필요는 없습니다 — &#x27;텍스트 정리기&#x27;라고만 이해하시면 돼요.</aside>
+  <aside class="notes">세 번째 블록은 공고_파싱. 기업마당이 돌려주는 `bsnsSumryCn` 요약 필드에는 HTML 태그(`&lt;p&gt;`, `&lt;br&gt;` 등)가 섞여 들어오는데, 이 블록이 그걸 다 걷어내고 제목·주관기관·접수마감·상세링크·대상·hashtags 6칸으로 깔끔하게 재포장해 줍니다. 사장님이 코드를 읽으실 필요는 없어요 — &#x27;텍스트 정리기&#x27;라고만 이해하시면 됩니다.</aside>
 </section>
 
 <section data-slide="25" data-block="D" data-slide-type="reassure">
@@ -623,53 +656,53 @@
   <h2>블록 4: Gemini_맞춤도_판정</h2>
   <p class="explanation">사장님 대신 공고를 읽고 우리 가게용인지 골라줍니다.</p>
   <ul>
-    <li>역할: AI가 공고 적합도 판단</li>
+    <li>역할: AI가 공고 적합도 판단 (기업마당 필드 기준)</li>
     <li>Prompt Type(프롬프트 유형)=Define below(아래에 정의)</li>
-    <li>질문글 5줄 이미 작성됨</li>
-    <li>한식당 예시 페르소나 기본값</li>
+    <li>질문글 5줄 이미 작성됨 — 분식집 예시 페르소나</li>
+    <li>입력 필드: 제목·대상·관할기관·hashtags·요약</li>
   </ul>
   <aside class="analogy-box">👨‍🍳 Gemini = 20년차 홀 매니저</aside>
   <figure>
     <img src="../screenshots/phase_3_cloud/05_workflow_build/13_node4_gemini_prompt_panel_clean.png" alt="블록 4: Gemini_맞춤도_판정 — 13_node4_gemini_prompt_panel_clean.png">
   </figure>
   <aside class="callout">페르소나 손볼 예정</aside>
-  <aside class="notes">블록 4번은 Gemini_맞춤도_판정. 공고 제목·본문을 받아서 &#x27;사장님 가게에 맞음/안 맞음&#x27;을 JSON으로 답해 주는 AI 블록입니다. 지금 더블클릭하시면 프롬프트 전문이 보여요.</aside>
+  <aside class="notes">블록 4번은 Gemini_맞춤도_판정. 파싱 단계에서 나온 6칸(제목·대상·관할기관·hashtags·요약·상세링크)을 Gemini에게 넘겨주고 &quot;사장님 가게에 맞음/안 맞음&quot;을 JSON으로 받습니다. 지금 더블클릭하시면 분식집 기본 페르소나로 작성된 프롬프트 5줄이 보여요 — 이따가 #40~#41에서 사장님 가게 정보로 3줄만 바꾸시면 됩니다.</aside>
 </section>
 
 <section data-slide="34" data-block="F">
   <div class="slide-meta"><span class="chip">34</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
-  <h2>블록 4-보조: Gemini Chat Model</h2>
-  <p class="explanation">AI 본체에 꽂는 점선 보조 블록. 모델과 출입증 번호만 지정.</p>
+  <h2>블록 4-보조: Gemini Chat Model + 점수 규칙</h2>
+  <p class="explanation">AI 본체에 꽂는 점선 보조 블록. 모델·출입증 번호 + 점수 규칙까지 프롬프트에 명시.</p>
   <ul>
-    <li>역할: 매니저 머릿속 AI (보조 블록 / Sub-node)</li>
-    <li>모델 = gemini-2.5-flash</li>
-    <li>2.0 계열보다 안정적·빠름</li>
+    <li>역할: 매니저 머릿속 AI (보조 블록 / Sub-node) · 모델 = gemini-2.5-flash</li>
     <li>로그인 정보 꾸러미 = Gemini_API (자격증명 / Credential)</li>
+    <li>가산점: `[서울]` prefix · hashtag `외식업`·`소상공인`</li>
+    <li>감점: `반도체`·`방산`·`제조업` 등 업종 불일치</li>
   </ul>
   <figure>
-    <img src="../screenshots/phase_3_cloud/05_workflow_build/14_node5_gemini_model_with_credential_clean.png" alt="블록 4-보조: Gemini Chat Model — 14_node5_gemini_model_with_credential_clean.png">
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/14_node5_gemini_model_with_credential_clean.png" alt="블록 4-보조: Gemini Chat Model + 점수 규칙 — 14_node5_gemini_model_with_credential_clean.png">
     <figcaption class="figcaption-override">보조 블록 (Sub-node) — 상위 블록에 자동 부착</figcaption>
   </figure>
-  <aside class="callout">2.5-flash 고정</aside>
-  <aside class="notes">4번 아래 작은 보조 블록이 하나 딸려 있어요. Gemini Chat Model — 실제로 AI를 돌리는 엔진 파트입니다. 모델은 gemini-2.5-flash 로 고정돼 있고, 사장님이 바꾸실 건 없습니다.</aside>
+  <aside class="callout">2.5-flash + 점수 규칙</aside>
+  <aside class="notes">4번 아래 작은 보조 블록이 하나 딸려 있어요. Gemini Chat Model — 실제로 AI를 돌리는 엔진 파트입니다. 모델은 gemini-2.5-flash 고정. 프롬프트 안에는 채점 규칙도 들어 있는데 — `[서울]` 접두사나 `외식업`·`소상공인` hashtag가 있으면 +점수, `반도체`·`방산` 같이 업종이 전혀 다른 hashtag가 있으면 -점수입니다. 이 규칙 덕분에 서울 소상공인 공고가 우선 순위로 올라와요.</aside>
 </section>
 
 <section data-slide="35" data-block="F">
   <div class="slide-meta"><span class="chip">35</span><span class="block-tag">블록 F · 실습 2 · AI 판단</span></div>
-  <h2>블록 5: 공고_매치_분기 (IF)</h2>
-  <p class="explanation">조건 맞으면 안쪽, 아니면 정중히 돌려보내는 문지기.</p>
+  <h2>블록 6: 공고_매치_분기 (IF) — AI 판정 필터</h2>
+  <p class="explanation">AI 판정 결과(match)를 곧바로 스위치로 씁니다. 지역 prefix·해시태그·마감 유효성을 Gemini 가 한 번에 검사.</p>
   <ul>
-    <li>역할: 손님 구분 줄</li>
-    <li>수업 모드 = 1 equals 1 항상 통과</li>
-    <li>Left Value=1 · Right Value=1 이미 입력</li>
-    <li>운영 모드는 자료집에서</li>
+    <li>역할: 손님 구분 줄 — Gemini 가 `match=true` 라고 판정한 공고만 통과</li>
+    <li>조건: `$json.match equals true` (Gemini_결과_파싱 노드가 만든 불리언)</li>
+    <li>통과 예: [서울]/[전국] 소상공인 공고 → match=true → 시트·메일로</li>
+    <li>차단 예: [부산]/[광주] 지역 전용, 반도체/방산 → match=false → 폐기</li>
   </ul>
   <aside class="analogy-box">🚦 IF = 손님 구분 줄</aside>
   <figure>
-    <img src="../screenshots/phase_3_cloud/05_workflow_build/35_if_node_conditions_panel_clean.png" alt="블록 5: 공고_매치_분기 (IF) — 35_if_node_conditions_panel_clean.png">
+    <img src="../screenshots/phase_3_cloud/05_workflow_build/35_if_node_conditions_panel_clean.png" alt="블록 6: 공고_매치_분기 (IF) — AI 판정 필터 — 35_if_node_conditions_panel_clean.png">
   </figure>
-  <aside class="callout">1=1 = 항상 통과 (수업 모드). 이 칸은 손대지 마세요.</aside>
-  <aside class="notes">블록 5번은 IF(분기). &#x27;AI가 맞다고 판단한 공고만 다음으로 보내자&#x27;라는 스위치예요. 수업 중엔 &#x27;항상 참&#x27;으로 두고 모든 공고가 다음 단계로 가게 합니다. 수업 후에는 &#x27;`match=true`인 공고만&#x27; 조건으로 바꾸시면 됩니다.</aside>
+  <aside class="callout">$json.match equals true — 이 칸이 실제 필터입니다.</aside>
+  <aside class="notes">블록 5번은 IF(분기). &#x27;AI가 맞다고 판단한 공고만 다음으로 보내자&#x27;라는 스위치예요. 수업 중엔 &#x27;항상 참(1=1)&#x27;으로 두고 모든 공고가 다음 단계로 가게 합니다. 수업 후에는 AI가 준 점수가 0 이상인 공고만 통과하도록 바꾸시면 돼요 — 예를 들어 `[서울] + 외식업` hashtag 공고는 +2점으로 통과, `반도체`·`방산` hashtag 공고는 -3점으로 차단됩니다.</aside>
 </section>
 
 <section data-slide="36" data-block="F">
@@ -1056,14 +1089,14 @@
     <li>Gmail 탭 새로고침</li>
     <li>&quot;이번 주 ... 공고&quot; 제목</li>
     <li>본문 4bullet 한글·URL</li>
-    <li>링크 클릭 = K-Startup 열림</li>
+    <li>링크 클릭 = 기업마당 공고 페이지 열림</li>
   </ul>
   <figure>
     <img src="../screenshots/phase_3_cloud/07_final_results/02_newsletter_email_preview_clean.png" alt="결과 확인 2 — 받은편지함 메일 1통 — 02_newsletter_email_preview_clean.png">
     <figcaption class="figcaption-override">Gmail 받은편지함 — 자동 발송된 뉴스레터 메일 본문</figcaption>
   </figure>
   <aside class="callout">메일 도착!</aside>
-  <aside class="notes">사장님의 Gmail 받은편지함 탭도 열어 보세요. &#x27;이번 주 맞춤 정부지원금 공고&#x27; 같은 제목의 메일이 한 통 도착해 있어야 해요. 본문에 시트와 같은 정보가 들어가 있고, 상세 링크를 누르면 K-Startup 공고 페이지가 열립니다.</aside>
+  <aside class="notes">사장님의 Gmail 받은편지함 탭도 열어 보세요. &#x27;이번 주 맞춤 정부지원금 공고&#x27; 같은 제목의 메일이 한 통 도착해 있어야 해요. 본문에 시트와 같은 정보가 들어가 있고, 상세 링크를 누르면 기업마당 공고 페이지가 열립니다. 거기서 바로 신청서 작성으로 넘어가실 수 있어요.</aside>
 </section>
 
 <section data-slide="58" data-block="H" data-slide-type="checkpoint">

@@ -1,3 +1,8 @@
+# DEPRECATED (2026-04-20 Round 3 bizinfo swap):
+# 이 스크립트는 K-Startup 시절 생성된 구버전 speaker notes 파이프라인입니다.
+# 현재 정본은 slides/scripts/XX_notes.md (수작업 편집) + slides/scripts/render_index.py.
+# 실행 시 기존 17a/17b/17c/57_notes.md 가 K-Startup 내용으로 덮여쓰일 수 있으므로 실행하지 마세요.
+
 """Generate v2-aligned speaker notes for each slide.
 
 Each note is 2-3 Korean sentences: restates the title + the key action/bullet
